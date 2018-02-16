@@ -32,13 +32,55 @@ Esta práctica consistirá en el desarrollo de un procesador de lenguajes sobre el
 %---------------------------------------------------------------------
 \label{cap2:sec:clases_lexicas}
 Enumeración de las clases léxicas del lenguaje. Para cada clase debe incluirse además una descripción informal, en lenguaje natural.
+Las clases léxicas que hemos considerado son las siguientes:
 
+\begin{itemize}
+\textbf{Programa}: Todo programa consta de dos secciones: una para las declaraciones y otra para las instrucciones, separadas por "`\&\&"' \textbf{PROGRAMA}
+\textbf{Declaraciones:} Compuestas por el nombre de tipo y el nombre de variable. \textbf{DECL}
+\textbf{Nombre de tipo:} Pueden ser o "`num"' o "`bool"'. \textbf{TIPO}
+\textbf{Nombre de variable:} Comienzan necesariamente por una letra, seguida por una secuencia de cero o más letras, dígitos o "`\_"'. \textbf{VAR}
+\textbf{Instruccion:} Constan de una variable seguida de un IGUAL seguido por una expresión (asignaciones). \textbf{INSTR}
+\textbf{Expresiones básicas:} Pueden ser números reales con y sin signo, "`true"' y "`false"'. \textbf{BASICA}
+\textbf{Número:} Pueden empezar opcionalmente con un signo + o - seguidos de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguida por una parte decimal y/o una parte exponencial. \textbf{NUM}
+\textbf{Parte decimal:} Consta de un punto seguido por una parte entera. \textbf{DEC}
+\textbf{Parte exponencial:} Consta de un letra E mayúscula o minúscula seguida, opcionalmente, por un signo + o -, y obligatoriamente por una parte entera. \textbf{EXP}
+\textbf{Operadores:} Pueden ser aritméticos, lógicos o relacionales. \textbf{OP}
+\textbf{Operadores aritméticos:} Pueden ser +,-,*,/. \textbf{OPAR}
+\textbf{Operadores lógicos:} Pueden ser "`and"', "`or"' y "`not"'. \textbf{OPLOG}
+\textbf{Operadores relacionales:} Pueden ser [<,>,<=,>=,==,!=]. \textbf{OPREL}
+\textbf{Paréntesis de apertura:} Signo "`C"'. \textbf{PAP}
+\textbf{Paréntesis de cierre:} Signo "`C"'. \textbf{PCIERRE}
+
+\end{itmize}
 %---------------------------------------------------------------------
 \section{Especificación Formal}
 %---------------------------------------------------------------------
 \label{cap2:sec:especificacion_formal}
-Especificación formal del léxico del lenguaje mediante definiciones regulares.
+Las definiciones regulares que definen el lenguaje son las siguientes:
 
+\begin{itemize}
+	\item \textbf{PROGRAMA:} DECL\&\&INSTR
+	\item \textbf{DECL:} (TIPOBVAR;)*|(TIPOBVAR)
+	\item \textbf{TIPO:} (num|bool)
+	\item \textbf{VAR:} ([a-z,A-Z][a-z,A-Z,0-9,\_]) 
+	\item \textbf{INSTR:} VAR=EXPRESION
+	\item \textbf{EXPRESION:} BASICA.OP.BASICA | BASICA.OP.COMP | COMP.OP.COMP | COMP.OP.BASICA 
+	\item \textbf{BASICA:} [VAR,NUM,true,false]
+	\item \textbf{NUM:} SIGNO?DIG+(DEC)?(EXP)? 
+	\item \textbf{SIGNO:} [+,-] 
+	\item \textbf{DIG:} [0-9] 
+	\item \textbf{DEC:} (.DIG+) 
+	\item \textbf{EXP:} ([e|E]SIGNO?DIG+) 
+	\item \textbf{OP:} [OPAR,OPLOG,OPREL] 
+	\item \textbf{OPAR:} [SIGNO,*,/] 
+	\item \textbf{OPLOG:} [and,or,not]
+	\item \textbf{OPREL:} [<,>,<=,>=,==,!=]
+	\item \textbf{SEP:} [BLANCO,TAB,CARRO,ENDL,ENDF]
+	\item \textbf{COMP:} BASICA.OP.BASICA
+	\item \textbf{PAP:} (C)
+	\item \textbf{PCIERRE:} (C)
+	
+\end{itemize}
 %---------------------------------------------------------------------
 \section{Diseño}
 %---------------------------------------------------------------------
