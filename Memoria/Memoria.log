@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.20)  16 FEB 2018 12:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.20)  17 FEB 2018 16:13
 entering extended mode
 **./Memoria.tex
 (Memoria.tex
@@ -329,58 +329,44 @@ Cap\'{\i }tulo 1.
 ]
 Cap\'{\i }tulo 2.
 
-! LaTeX Error: \begin{itemize} on input line 37 ended by \end{itmize}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.54 \end{itmize}
-                 
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.61 \begin{itemize}
-                    
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+Overfull \hbox (4.5749pt too wide) in paragraph at lines 39--40
+[]\T1/lmr/bx/n/10.95 SEC: \T1/lmr/m/n/10.95 Re-pre-sen-ta el sec-cio-na-dor de las dos par-tes del pro-gra-ma (&&). 
+ []
 
 [3
 
 ]
-Overfull \hbox (51.66972pt too wide) in paragraph at lines 67--68
-[]\T1/lmr/bx/n/10.95 EXPRESION: \T1/lmr/m/n/10.95 BA-SI-CA.OP.BASICA | BA-SI-CA.OP.COMP | COMP.OP.COMP
+LaTeX Info: Redefining \. on input line 67.
+LaTeX Info: Redefining \% on input line 67.
+ [4]
+Overfull \hbox (19.85405pt too wide) in paragraph at lines 88--89
+[]\T1/lmr/bx/n/10.95 EXPR: \T1/lmr/m/n/10.95 (BA-SI-CA.OP.BASICA | BA-SI-CA.OP.COMP | COMP.OP.COMP
  []
 
-LaTeX Info: Redefining \. on input line 90.
-LaTeX Info: Redefining \% on input line 90.
-[4] (Memoria.aux
+LaTeX Info: Redefining \. on input line 100.
+LaTeX Info: Redefining \% on input line 100.
+[5]
+LaTeX Info: Redefining \. on input line 117.
+LaTeX Info: Redefining \% on input line 117.
+ [6] (Memoria.aux
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
 ) ) 
 Here is how much of TeX's memory you used:
- 3874 strings out of 493323
- 53545 string characters out of 3139042
- 125302 words of memory out of 3000000
- 7346 multiletter control sequences out of 15000+200000
+ 3873 strings out of 493323
+ 53536 string characters out of 3139042
+ 126302 words of memory out of 3000000
+ 7345 multiletter control sequences out of 15000+200000
  52386 words of font info for 40 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 53i,6n,30p,310b,359s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,6n,30p,461b,403s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.p
 fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr1
 0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lm
 r17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmro10.pfb>
-Output written on Memoria.pdf (5 pages, 177390 bytes).
+Output written on Memoria.pdf (7 pages, 179645 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
+ 51 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
