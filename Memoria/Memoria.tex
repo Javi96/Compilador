@@ -35,31 +35,39 @@ Todo programa consta de dos secciones: una para las declaraciones y otra para la
 Las clases léxicas que hemos considerado para representar los tokens del lenguaje son las siguientes:
 
 \begin{itemize}
-%\textbf{Declaraciones:} Compuestas por el nombre de tipo y el nombre de variable. \textbf{DECL}
 	\item \textbf{SEC:} Representa el seccionador de las dos partes del programa ("`\&\&"').
-	\item \textbf{TIPO:} Representa el nombre del tipo. Puede ser únicamente o "`num"' o "`bool"'.
+	%\item \textbf{TIPO:} Representa el nombre del tipo. Puede ser únicamente o "`num"' o "`bool"'.
 	\item \textbf{NUM:} Palabra reservada "`num"'.
 	\item \textbf{BOOL:} Palabra reservada "`bool"'.
 	\item \textbf{VAR:} Representa el nombre de la variable. Comienza necesariamente por una letra, seguida por una secuencia de cero o más letras, dígitos o el símbolo "`\_"'.
 	\item \textbf{ASIG:} Representa el signo igual de las asignaciones.
-	\item \textbf{EXPR:} Representa una expresión. Puede ser básica o compuesta, según si aparece un único elemento o dos acompañados de un operador.
-%\textbf{Instruccion:} Constan de una variable seguida de un IGUAL seguido por una expresión (asignaciones). \textbf{INSTR}
-	\item \textbf{BASICA:} Se corresponde a una expresión básica. Puede ser un número real con o sin signo, o bien un booleano,"`true"' o "`false"'. También puede ser el nombre de una variable que se correspondería a un número.
+	%\item \textbf{EXPR:} Representa una expresión. Puede ser básica o compuesta, según si aparece un único elemento o dos acompañados de un operador.
+	%\item \textbf{BASICA:} Se corresponde a una expresión básica. Puede ser un número real con o sin signo, o bien un booleano,"`true"' o "`false"'. También puede ser el nombre de una variable que se correspondería a un número.
 	\item \textbf{TRUE:} Palabra reservada "`true"'.
 	\item \textbf{FALSE:} Palabra reservada "`false"'.
-	\item \textbf{COMP:} Se corresponde a una expresión compuesta que en el fondo no es más que dos básicas separadas por un operador.
+	%\item \textbf{COMP:} Se corresponde a una expresión compuesta que en el fondo no es más que dos básicas separadas por un operador.
 	\item \textbf{NUM:} Representa un número real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
-	\item \textbf{SIGNO:} Puede ser el signo + o el signo -.
-	\item \textbf{DIG:} Cualquier dígito del 0 al 9.
-	\item \textbf{DEC} Parte decimal que consta de un punto seguido por una sucesión de uno o más dígitos.
-	\item \textbf{EX:} Parte exponencial que consta de un letra E mayúscula o minúscula seguida, opcionalmente, por un signo + o -, y obligatoriamente por una parte entera.
-	\item \textbf{OP:} Representa un operador que puede ser aritmético, lógico o relacional.
-	\item \textbf{OPAR:} Operador aritmético, es decir: un signo (+ o -), * o /.
-	\item \textbf{OPLOG:} Operador lógico, es decir: "`and"', "`or"' o "`not"'.
+	%\item \textbf{SIGNO:} Puede ser el signo + o el signo -.
+	%\item \textbf{DIG:} Cualquier dígito del 0 al 9.
+	%\item \textbf{DEC} Parte decimal que consta de un punto seguido por una sucesión de uno o más dígitos.
+	%\item \textbf{EX:} Parte exponencial que consta de un letra E mayúscula o minúscula seguida, opcionalmente, por un signo + o -, y obligatoriamente por una parte entera.
+	%\item \textbf{OP:} Representa un operador que puede ser aritmético, lógico o relacional.
+	%\item \textbf{OPAR:} Operador aritmético, es decir: un signo (+ o -), * o /.
+	%\item \textbf{OPLOG:} Operador lógico, es decir: "`and"', "`or"' o "`not"'
+	\item \textbf{MAS:} Operador suma (+).
+	\item \textbf{MENOS:} Operador resta (-).
+	\item \textbf{POR:} Operador multiplicación (*).
+	\item \textbf{DIV:} Operador división (/).
 	\item \textbf{AND:} Palabra reservada "`and"'.
 	\item \textbf{OR:} Palabra reservada "`or"'.
 	\item \textbf{NOT:} Palabra reservada "`not"'.
-	\item \textbf{OPREL:} Operador relacional, es decir: <,>,<=,>=,== o !=.
+	\item \textbf{MAY:} Operador mayor (>).
+	\item \textbf{MEN:} Operador menor (<).
+	\item \textbf{MAYI:} Operador mayor o igual (>=).
+	\item \textbf{MENI:} Operador menor o igual (<=).
+	\item \textbf{IGUAL:} Operador igual a (==).
+	\item \textbf{DIST:} Operador distinto a (!=).
+	%\item \textbf{OPREL:} Operador relacional, es decir: <,>,<=,>=,== o !=.
 	\item \textbf{PAP:} Signo de apertura de paréntesis.
 	\item \textbf{PCI:} Signo de cierre de paréntesis.
 	\item \textbf{SEP:} Separadores: espacio en blanco, tabulador, retorno de carro, salto de línea y backspace.
@@ -69,41 +77,51 @@ Las clases léxicas que hemos considerado para representar los tokens del lenguaj
 \section{Especificación Formal}
 %---------------------------------------------------------------------
 \label{cap2:sec:especificacion_formal}
-Las definiciones regulares que definen el lenguaje de forma general son las siguientes:
-
-\begin{itemize}
-	\item \textbf{PROGRAMA:} DECL.SEC.INSTR
-	\item \textbf{DECLARACION:} (TIPO.SEP.VAR;)*|(TIPO.SEP.VAR)
-	\item \textbf{INSTRUCCION:} VAR=EXPR
-\end{itemize}
 
 Las definiciones regulares correspondientes a las clases léxicas definidas son:
 
 \begin{itemize}
 	\item \textbf{SEC:} \&\&
-	\item \textbf{TIPO:} (NUM|BOOL)
+	
+	\item \textbf{VAR:} LETRA([LETRA|DIG, \textbackslash _]*)
+	\item \textbf{LETRA:} ([a-z,A-Z])
+
+	%\item \textbf{TIPO:} (NUM|BOOL)
 	\item \textbf{NUM:} ([n][u][m])
 	\item \textbf{BOOL:} ([b][o][o][l])
-	\item \textbf{VAR:} ([a-z,A-Z][a-z,A-Z,0-9,\_]*) 
-	\item \textbf{EXPR:} (BASICA.OP.BASICA | BASICA.OP.COMP | COMP.OP.COMP | COMP.OP.BASICA) 
-	\item \textbf{BASICA:} [VAR,NUM,true,false]
+	%\item \textbf{EXPR:} (BASICA.OP.BASICA | BASICA.OP.COMP | COMP.OP.COMP | COMP.OP.BASICA) 
+	%\item \textbf{BASICA:} [VAR,NUM,true,false]
 	\item \textbf{TRUE:} ([t][r][u][e])
 	\item \textbf{FALSE:} ([f][a][l][s][e])
-	\item \textbf{COMP:} BASICA.OP.BASICA
+	
+	%\item \textbf{COMP:} BASICA.OP.BASICA
 	\item \textbf{NUM:} SIGNO?(DIG+(DEC)?(EXP)?) 
 	\item \textbf{SIGNO:} [+,-] 
 	\item \textbf{DIG:} [0-9] 
 	\item \textbf{DEC:} .(DIG+) 
-	\item \textbf{EX:} [e|E](SIGNO?DIG+(DEC)?) 
-	\item \textbf{OP:} [OPAR,OPLOG,OPREL]
-	\item \textbf{OPAR:} [SIGNO,*,/] 
-	\item \textbf{OPLOG:} (AND|OR|NOT)
+	\item \textbf{EX:} [e|E](SIGNO?DIG+(DEC)?)
+ 
+	%\item \textbf{OP:} [OPAR,OPLOG,OPREL]
+	%\item \textbf{OPAR:} [SIGNO,*,/] 
+	%\item \textbf{OPLOG:} (AND|OR|NOT)
 	\item \textbf{AND:} ([a][n][d])
 	\item \textbf{OR:} ([o][r])
 	\item \textbf{NOT:} ([n][o][t])
-	\item \textbf{OPREL:} [<,>,<=,>=,==,!=]
+	\item \textbf{MAS:} (\textbackslash +)
+	\item \textbf{MENOS:} (\textbackslash -)
+	\item \textbf{DIV:} (\textbackslash /)
+	\item \textbf{POR:} (\textbackslash *)
+	\item \textbf{MAY:} (>)
+	\item \textbf{MEN:} (<)
+	\item \textbf{MAYI:} ([>][=])
+	\item \textbf{MENI:} ([<][=])
+	\item \textbf{IGUAL:} ([=][=])
+	\item \textbf{DIST:} ([!][=])
+	
+	%\item \textbf{OPREL:} [<,>,<=,>=,==,!=]
 	\item \textbf{PAP:} ("`("')
 	\item \textbf{PCIERRE:} ("`)"')
+	
 	\item \textbf{SEP:} [BLANCO,TAB,ENDL,CARRO,BACK]
 	
 \end{itemize}
