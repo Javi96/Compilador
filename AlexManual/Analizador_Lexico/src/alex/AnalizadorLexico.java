@@ -23,7 +23,7 @@ public class AnalizadorLexico {
    private static enum Estado {
     INICIO, NADA, PAP, PCI, ASIG, IGUAL, MEN,
     MENI, MAY, MAYI, DIST, MAS, ENT, DEC, EX, SEC,
-    DIV, POR, NOT, OR, AND, FALSE, NUM, BOOL, TRUE, VAR, FIN
+    DIV, POR, NOT, OR, AND, FALSE, NUM, TRUE, VAR, FIN
    }
 
    private Estado estado;
@@ -43,10 +43,9 @@ public class AnalizadorLexico {
      lex.delete(0,lex.length());
      while(true) {
          switch(estado) {
-		case AND: 
+		case AND:
 			break;
-		case ASIG: return unidadAsig();
-		case BOOL:
+		case ASIG:
 			break;
 		case DEC:
 			break;
@@ -56,6 +55,12 @@ public class AnalizadorLexico {
 		case DIV:
 			return unidadDiv();
 		case ENT:
+			if (hayDigito()) transita(Estado.ENT);
+            else if(haySuma()) transita(Estado.MAS);
+            else if(hayResta()) transita(Estado.MEN);
+            else if(hayMul()) transita(Estado.POR);
+            else if(hayDiv()) transita(Estado.DIV);
+            else if(hayLetra()) transita(Estado.VAR);
 			break;
 		case EX:
             if (hayDigito()) transita(Estado.ENT);
@@ -64,27 +69,47 @@ public class AnalizadorLexico {
             else return unidadEx();
 			break;
 		case FALSE:
+			//AND OR NOT COMPARADORES 
 			break;
 		case FIN:
 			break;
 		case IGUAL:
 			break;
 		case INICIO:
+			if(hayLetra()) transita(Estado.VAR);
+			else if (hayExponente()) transitaIgnorando(Estado.EX); //No hay, daria un error
+			else if (hayDigito()) transita(Estado.ENT);
+			else if (hayPunto()) transitaIgnorando(Estado.DEC);//No hay, daria un error
+			else if (haySuma()) transita(Estado.MAS);
+			else if (hayResta()) transita(Estado.MEN);
+			else if (hayMul()) transita(Estado.POR);
+			else if (hayDiv()) transita(Estado.DIV);
+			else if (hayPAp()) transita(Estado.PAP);
+			else if (hayPCierre()) transita(Estado.PCI);
+			else if (hayMayor()) transita(Estado.MAY);
+			else if (hayMenor()) transita(Estado.MEN);
+			else if (hayAsignacion()) transita(Estado.ASIG);
+			else if (haySep()) transitaIgnorando(Estado.INICIO);
+			else if (hayNL()) transitaIgnorando(Estado.INICIO);
+			else if (hayEOF()) transita(Estado.FIN);
+			else return unidadId();//palabra reservada(+ de un caracter)
 			break;
 		case MAS:
             if (hayDigito()) transita(Estado.ENT);
             else return unidadMas();
             break;
 		case MAY:
+			if(hayAsignacion()) transita(Estado.MAYI);
+			else return unidadMay();
 			break;
 		case MAYI:
-			break;
+			return unidadId();
 		case MEN:
-            if (hayDigito()) transita(Estado.MEN);
-            else return unidadMenos();
+			if(hayAsignacion()) transita(Estado.MENI);
+			else return unidadMay();
 			break;
 		case MENI:
-			break;
+			return unidadId();
 		case NADA:
 			break;
 		case NOT:
