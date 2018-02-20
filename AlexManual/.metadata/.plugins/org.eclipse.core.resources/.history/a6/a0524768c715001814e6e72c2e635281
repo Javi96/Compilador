@@ -43,9 +43,10 @@ public class AnalizadorLexico {
      lex.delete(0,lex.length());
      while(true) {
          switch(estado) {
-		case AND: 
+		case AND:
 			break;
-		case ASIG: return unidadAsig();
+		case ASIG:
+			break;
 		case BOOL:
 			break;
 		case DEC:
