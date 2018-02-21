@@ -19,11 +19,13 @@ public class AnalizadorLexico {
     * INCIO : estado en el que comienza el automata.
     * NADA : estado intermedio en el que no ocurre nada.
     * FIN : estado especial para cuando se recibe EOF.
+    * R_AMP : R_&
     * */
    private static enum Estado {
-    INICIO, NADA, PAP, PCI, ASIG, IGUAL, MEN,
-    MENI, MAY, MAYI, DIST, MAS, ENT, DEC, EX, SEC,
-    DIV, POR, NOT, OR, AND, FALSE, NUM, TRUE, VAR, FIN
+    INICIO, R_PAP, R_PCI, R_ASIG, R_IGUAL, R_MEN,
+    R_MENI, R_MAY, R_MAYI, R_EXL,R_DIST,R_VAR,
+    R_FIN,R_AMP,R_SEC,R_POR,R_DIV,R_MAS,R_MENOS,
+    R_ENT,R_P,R_DEC,R_E,R_DIG,R_EX,R_AND,R_NOT,R_OR
    }
 
    private Estado estado;
@@ -36,6 +38,15 @@ public class AnalizadorLexico {
     columnaActual=1;
    }
    
+   /*	NOTA:
+    * 		Hay muchos casos en los que devuelvo error y en otros la unidad en cuestion, no se 
+    * 		cual de las dos maneras esta bien. Hay que revisar esto. Tambien uso mucho lo de 
+    * 		unidadId,pero no se si eso esta bien.
+    * 
+    * 	NOTA2:
+    * 		Hay que revisar las clases lexicas, creo que sobran algunas y puede que falten otras.
+    * */
+   
    public UnidadLexica sigToken() throws IOException {
      estado = Estado.INICIO;
      filaInicio = filaActual;
@@ -43,94 +54,123 @@ public class AnalizadorLexico {
      lex.delete(0,lex.length());
      while(true) {
          switch(estado) {
-		case AND:
-			break;
-		case ASIG:
-			break;
-		case DEC:
-			break;
-		case DIST:
-			if (hayDigito()) transita(Estado.ENT);
-			break;
-		case DIV:
-			return unidadDiv();
-		case ENT:
-			if (hayDigito()) transita(Estado.ENT);
-            else if(haySuma()) transita(Estado.MAS);
-            else if(hayResta()) transita(Estado.MEN);
-            else if(hayMul()) transita(Estado.POR);
-            else if(hayDiv()) transita(Estado.DIV);
-            else if(hayLetra()) transita(Estado.VAR);
-			break;
-		case EX:
-            if (hayDigito()) transita(Estado.ENT);
-            else if(haySuma()) transita(Estado.MAS);
-            else if(hayResta()) transita(Estado.MEN);
-            else return unidadEx();
-			break;
-		case FALSE:
-			//AND OR NOT COMPARADORES 
-			break;
-		case FIN:
-			break;
-		case IGUAL:
-			break;
 		case INICIO:
-			if(hayLetra()) transita(Estado.VAR);
-			else if (hayExponente()) transitaIgnorando(Estado.EX); //No hay, daria un error
-			else if (hayDigito()) transita(Estado.ENT);
-			else if (hayPunto()) transitaIgnorando(Estado.DEC);//No hay, daria un error
-			else if (haySuma()) transita(Estado.MAS);
-			else if (hayResta()) transita(Estado.MEN);
-			else if (hayMul()) transita(Estado.POR);
-			else if (hayDiv()) transita(Estado.DIV);
-			else if (hayPAp()) transita(Estado.PAP);
-			else if (hayPCierre()) transita(Estado.PCI);
-			else if (hayMayor()) transita(Estado.MAY);
-			else if (hayMenor()) transita(Estado.MEN);
-			else if (hayAsignacion()) transita(Estado.ASIG);
-			else if (haySep()) transitaIgnorando(Estado.INICIO);
-			else if (hayNL()) transitaIgnorando(Estado.INICIO);
-			else if (hayEOF()) transita(Estado.FIN);
-			else return unidadId();//palabra reservada(+ de un caracter)
+			//SI PCI -> TRANSITA R_PCI
+			if(hayPCierre()) transita(Estado.R_PCI);		
+			//SI PAP -> TRANSITA R_PAP
+			else if(hayPAp()) transita(Estado.R_PAP);
+			//SI ASIG -> TRANSITA R_ASIG
+			else if(hayAsignacion()) transita(Estado.R_ASIG);
+			//SI MEN -> TRANSITA R_MEN
+			else if(hayMenor()) transita(Estado.R_MEN);
+			//SI MAY -> TRANSITA R_MAY
+			else if(hayMayor()) transita(Estado.R_MAY);
+			//SI ! -> TRANSITA R_EXL
+			else if(hayExcl()) transita(Estado.R_EXL);
+			//SI LETRA -> TRANSITA R_VAR
+			else if(hayLetra()) transita(Estado.R_VAR);
+			//SI EOF -> TRANSITA R_FIN
+			else if(hayEOF()) transita(Estado.R_FIN);
+			//SI & -> TRANSITA R_AMP
+			else if(hayAmp()) transita(Estado.R_AMP);
+			//SI * -> TRANSITA R_POR
+			else if(hayMul()) transita(Estado.R_POR);
+			//SI / -> TRANSITA R_DIV
+			else if(hayDiv()) transita(Estado.R_DIV);
+			//SI + -> TRANSITA R_MAS
+			else if(haySuma()) transita(Estado.R_MAS);
+			//SI - -> TRANSITA R_MENOS
+			else if(hayResta()) transita(Estado.R_MENOS);
+			//SI SEP -> TRANSITA INICIO
+			else if(haySep()) transitaIgnorando(Estado.INICIO);
+			//SI ENT -> TRANSITA R_ENT
+			else if(hayDigito()) transita(Estado.R_ENT);
+			//si no es ninguna de las anteriores,deberia dar error
+			else error();
 			break;
-		case MAS:
-            if (hayDigito()) transita(Estado.ENT);
-            else return unidadMas();
-            break;
-		case MAY:
-			if(hayAsignacion()) transita(Estado.MAYI);
-			else return unidadMay();
+		case R_AMP:
+			if(hayAmp()) transita(Estado.R_SEC);
+			else error();
 			break;
-		case MAYI:
+		case R_AND:
+			//no se muy bien que hacer aqui
+			break;
+		case R_ASIG:
+			if(hayAsignacion()) transita(Estado.R_IGUAL);
+			return unidadAsig();
+		case R_DEC:
+			if(hayDigito()) transita(Estado.R_DEC);
+			else if(hayExponente()) transita(Estado.R_EX);
+			else error();
+			break;
+		case R_DIG:
+			if(hayDigito()) transita(Estado.R_EX);
+			else error();
+			break;
+		case R_DIST:
 			return unidadId();
-		case MEN:
-			if(hayAsignacion()) transita(Estado.MENI);
-			else return unidadMay();
+		case R_DIV:
+			return unidadDiv();
+		case R_E:
+			if(haySuma() || hayResta()) transita(Estado.R_DIG);
+			else error();
 			break;
-		case MENI:
+		case R_ENT:
+			if(hayDigito()) transita(Estado.R_ENT);
+			else if(hayPunto()) transita(Estado.R_P);
+			else if(hayExponente()) transita(Estado.R_E);
+			else error();
+			break;
+		case R_EX:
+			return unidadEx();
+		case R_EXL:
+			if(hayAsignacion()) transita(Estado.R_DIST);
+			else error();
+			break;
+		case R_FIN:
 			return unidadId();
-		case NADA:
+		case R_IGUAL:
+			return unidadId();
+		case R_MAS:
+			if(hayDigito()) transita(Estado.R_ENT);
+			return unidadMas();
+		case R_MAY:
+			if(hayAsignacion()) transita(Estado.R_MAYI);
+			return unidadMay();
+		case R_MAYI:
+			return unidadId();
+		case R_MEN:
+			if(hayAsignacion()) transita(Estado.R_MENI);
+			else unidadMen();
 			break;
-		case NOT:
+		case R_MENI:
+			return unidadId();
+		case R_MENOS:
+			if(hayDigito()) transita(Estado.R_ENT);
+			else unidadMenos();
 			break;
-		case NUM:
+		case R_NOT:
+			//no se muy bien que hacer aqui
 			break;
-		case OR:
+		case R_OR:
+			//no se muy bien que hacer aqui
 			break;
-		case PAP:
+		case R_P:
+			if(hayDigito()) transita(Estado.R_DEC);
+			else error();
+			break;
+		case R_PAP:
 			return unidadPap();
-		case PCI:
+		case R_PCI:
 			return unidadPci();
-		case POR:
+		case R_POR:
 			return unidadPor();
-		case SEC:
-			break;
-		case TRUE:
-			break;
-		case VAR:
-			break;
+		case R_SEC:
+			return unidadId();
+		case R_VAR:
+			return unidadVar();
 		default:
+			error();
 			break;
          }
      }    
@@ -170,6 +210,8 @@ public class AnalizadorLexico {
    private boolean hayExponente() {return sigCar == 'e' || sigCar == 'E';}
    private boolean hayDigito() {return sigCar >= '0' && sigCar <= '9';}
    private boolean hayPunto() {return sigCar == '.';}
+   private boolean hayExcl() {return sigCar == '!';}
+   private boolean hayAmp() {return sigCar == '&';}
    /*OPERADORES*/
    private boolean haySuma() {return sigCar == '+';}
    private boolean hayResta() {return sigCar == '-';}
@@ -184,8 +226,8 @@ public class AnalizadorLexico {
    /*ASIGNACIONES*/
    private boolean hayAsignacion() {return sigCar == '=';}
    /*ESPECIALES*/ 
-   private boolean haySep() {return sigCar == ' ' || sigCar == '\t' || sigCar=='\n';}
-   private boolean hayNL() {return sigCar == '\r' || sigCar == '\b' || sigCar == '\n';}
+   private boolean haySep() {return sigCar == ' ' || sigCar == '\t' || sigCar=='\n' || sigCar == '\r' 
+		   							|| sigCar == '\b';}
    private boolean hayEOF() {return sigCar == -1;}
    
    private UnidadLexica unidadId() {
@@ -209,7 +251,9 @@ public class AnalizadorLexico {
          case "!=":    
              return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.DIST);             
          case "&&":    
-             return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.SEC);           
+             return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.SEC);
+         case "-1":
+        	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.EOF);
          default:    
             return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.IDEN,lex.toString());     
       }
@@ -230,30 +274,24 @@ public class AnalizadorLexico {
    private UnidadLexica unidadPci() {
 	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.PCI);     
    }
-   private UnidadLexica unidadEof() {
-	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.EOF);     
-   }
    private UnidadLexica unidadMas() {
 	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MAS);     
    }    
    private UnidadLexica unidadMenos() {
-	  return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MENOS);     
+	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MENOS);     
    }    
    private UnidadLexica unidadPor() {
-	  return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.POR);     
+	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.POR);     
    }
    private UnidadLexica unidadDiv() {
-	  return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.DIV);     
+	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.DIV);     
    }	   
    private UnidadLexica unidadEnt() {
-	     return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.ENT,lex.toString());     
+	 return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.ENT,lex.toString());     
    }
    private UnidadLexica unidadNum() {
-	     return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.NUM,lex.toString());     
-   }
-   private UnidadLexica unidadBool() {
-	     return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.BOOL,lex.toString());     
-   }
+	 return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.NUM,lex.toString());     
+   } 
    private UnidadLexica unidadVar() {
      return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.VAR,lex.toString());    
    }    
