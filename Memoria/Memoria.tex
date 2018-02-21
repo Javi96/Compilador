@@ -1,9 +1,13 @@
-\documentclass[11pt,oneside,onecolumn,openany]{book}
+\documentclass[11pt,oneside,onecolumn,openany,spanish]{book}
 
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
-\usepackage[spanish,activeacute]{babel}
+\usepackage{babel}
+%\usepackage[spanish,activeacute]{babel}
 \usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{babel}
 
 \title{Práctica PL}
 \author{Elena Kaloyanova Popova y Álvaro Borja Velasco García}
@@ -103,7 +107,67 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
 \section{Diseño}
 %---------------------------------------------------------------------
 \label{cap2:sec:disenyo}
-El autómata que reconocería el lenguaje es el siguiente:
 
-
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (q_0) {INICIO};
+    \node[state, accepting] (q_1) [above=3of q_0]  {R\_ASIG};
+    \node[state, accepting] (q_2) [left=2of q_1] {R\_PCI};
+    \node[state, accepting] (q_3) [above=3of q_2] {R\_PAP};
+    \node[state, accepting] (q_4) [above=3of q_1] {R\_IGUAL};
+    \node[state, accepting] (q_5) [right=2of q_1] {R\_MEN};
+    \node[state, accepting] (q_6) [right=2of q_5] {R\_MAY};
+    \node[state] (q_7) [right=2of q_6] {R\_EXL};
+    \node[state, accepting] (q_8) [above=3of q_5] {R\_MENI};
+    \node[state, accepting] (q_9) [above=3of q_6] {R\_MAYI};
+    \node[state, accepting] (q_10) [above=3of q_7] {R\_DIST};
+    \node[state, accepting] (q_11) [below=3of q_0] {R\_MAS};
+		\node[state, accepting] (q_12) [left=3of q_11] {R\_MENOS};
+    \node[state, accepting] (q_13) [right=3of q_11] {R\_POR};
+    \node[state, accepting] (q_14) [below=of q_13] {R\_DIV};
+    \node[state, accepting] (q_15) [below=4of q_11] {R\_ENT};
+    \node[state] (q_16) [right=3of q_15] {R\_P};
+    \node[state, accepting] (q_17) [right=3of q_16] {R\_DEC};
+    \node[state] (q_18) [below=3of q_17] {R\_E};
+    \node[state] (q_19) [left=3of q_18] {R\_SIGNO};
+    \node[state, accepting] (q_20) [left=3of q_19] {R\_EX};
+    \node[state, accepting] (q_21) [right=8of q_0] {R\_VAR};
+    \node[state, accepting] (q_22) [below=2of q_21] {R\_FIN};
+    \node[state] (q_23) [below=6of q_7] {R\_\&};
+    \node[state, accepting] (q_24) [below=3of q_22] {R\_SEC};
+			\path[->]
+          (q_0) edge [loop left] node {$[$' ',\textbackslash t,\textbackslash n,\textbackslash r,\textbackslash b]} (q_0)
+                edge node [fill=white, anchor=center, pos=0.5]          {=} (q_1)
+                edge node [fill=white, anchor=center, pos=0.5]     {$)$} (q_2)
+                edge node [fill=white, anchor=center, pos=0.5]           {$($} (q_3)
+                edge [bend left]        node [fill=white, anchor=center, pos=0.5]           {$<$} (q_5)
+                edge [bend left=5] node [fill=white, anchor=center, pos=0.5] {$>$} (q_6)
+                edge [bend right=25] node [fill=white, anchor=center, pos=0.5] {!} (q_7)
+                edge node [fill=white, anchor=center, pos=0.5] {+} (q_11)
+                edge node [fill=white, anchor=center, pos=0.5] {-} (q_12)
+                edge node [fill=white, anchor=center, pos=0.5] {$\ast$} (q_13)
+                edge  node [fill=white, anchor=center, pos=0.5] {/} (q_14)
+                edge  node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+                edge  node [fill=white, anchor=center, pos=0.5] {Letra} (q_21)
+                edge  node [fill=white, anchor=center, pos=0.5] {EOF} (q_22)
+                edge  node [fill=white, anchor=center, pos=0.5] {\&} (q_23)
+          (q_1) edge  node[fill=white, anchor=center, pos=0.5]     {=} (q_4)
+          (q_5) edge  node [fill=white, anchor=center, pos=0.5]            {=} (q_8)
+          (q_6) edge  node [fill=white, anchor=center, pos=0.5]            {=} (q_9)
+          (q_7) edge node [fill=white, anchor=center, pos=0.5] {=} (q_10)
+          (q_11) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+          (q_12) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+          (q_15) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+                 edge node [fill=white, anchor=center, pos=0.5] {\textbackslash .} (q_16)
+                 edge node [fill=white, anchor=center, pos=0.5] {e|E} (q_18)
+          (q_16) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_17)
+          (q_17) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_17)
+                 edge node [fill=white, anchor=center, pos=0.5] {e|E} (q_18)
+          (q_18) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_20)
+                 edge node [fill=white, anchor=center, pos=0.5] {-,+} (q_19)
+          (q_21) edge node [fill=white, anchor=center, pos=0.5] {Letra|Dig|\_} (q_21)
+          (q_23) edge node [fill=white, anchor=center, pos=0.5] {\&} (q_24);
+  \end{tikzpicture}
+	
 \end{document}
+
+
