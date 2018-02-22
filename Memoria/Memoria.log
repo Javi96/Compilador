@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.20)  21 FEB 2018 12:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.20)  22 FEB 2018 18:26
 entering extended mode
 **./Memoria.tex
 (Memoria.tex
@@ -570,29 +570,29 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 19.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 21.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 19.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 21.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 19.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 21.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 19.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 21.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 19.
+(Font)              <12> on input line 21.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 19.
+(Font)              <8> on input line 21.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 19.
+(Font)              <6> on input line 21.
  [1
 
 
@@ -615,45 +615,47 @@ Cap\'{\i }tulo 1.
 ]
 Cap\'{\i }tulo 2.
 
-Overfull \hbox (4.5749pt too wide) in paragraph at lines 42--43
+Overfull \hbox (4.5749pt too wide) in paragraph at lines 44--45
 []\T1/lmr/bx/n/10.95 SEC: \T1/lmr/m/n/10.95 Re-pre-sen-ta el sec-cio-na-dor de las dos par-tes del pro-gra-ma (&&). 
  []
 
 [3
 
 ]
-LaTeX Info: Redefining \. on input line 82.
-LaTeX Info: Redefining \% on input line 82.
+LaTeX Info: Redefining \. on input line 90.
+LaTeX Info: Redefining \% on input line 90.
  [4]
-Overfull \hbox (44.47607pt too wide) in paragraph at lines 169--170
+Overfull \hbox (44.47614pt too wide) in paragraph at lines 206--207
 [][] 
  []
 
-LaTeX Info: Redefining \. on input line 171.
-LaTeX Info: Redefining \% on input line 171.
+LaTeX Info: Redefining \. on input line 208.
+LaTeX Info: Redefining \% on input line 208.
 [5]
-LaTeX Info: Redefining \. on input line 171.
-LaTeX Info: Redefining \% on input line 171.
+Overfull \vbox (22.49553pt too high) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 208.
+LaTeX Info: Redefining \% on input line 208.
  [6] (Memoria.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 14562 strings out of 493323
- 289555 string characters out of 3139042
- 372368 words of memory out of 3000000
- 17810 multiletter control sequences out of 15000+200000
+ 14594 strings out of 493323
+ 290110 string characters out of 3139042
+ 372044 words of memory out of 3000000
+ 17842 multiletter control sequences out of 15000+200000
  52386 words of font info for 40 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,8n,68p,461b,788s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-math
-it.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.e
+ 55i,8n,68p,461b,807s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.e
+nc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.e
 nc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/
 lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
 m/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmro10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/lm/lmsy10.pfb>
-Output written on Memoria.pdf (7 pages, 192080 bytes).
+Output written on Memoria.pdf (7 pages, 193365 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
