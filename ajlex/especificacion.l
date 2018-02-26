@@ -22,8 +22,8 @@ package ajlex;
 
 sec = ([&][&])
 letra  = ([A-Z]|[a-z])
-digito = [0-9]
-var = {letra}({letra}|{digito}|[_])*
+dig = [0-9]
+var = {letra}({letra}|{dig}|[_])*
 num = num
 bool = bool
 true = true
@@ -37,7 +37,7 @@ ex = [e,E]({signo}?)({dig}{dig}*)
 numr = {signo}?({dig}{dig}*)({dec}?)({ex}?)
 mas = \+
 menos = \-
-por \*
+por = \*
 div = /
 may = >
 men = <
@@ -51,18 +51,22 @@ pap = \(
 pci = \)
 separador = [ \t\r\b\n]
 %%
-{separador}               {}
-{num}                  {return ops.unidadEvalua();}
-{donde}                   {return ops.unidadDonde();}
-{identificador}           {return ops.unidadId();}
-{numeroEntero}            {return ops.unidadEnt();}
-{numeroReal}              {return ops.unidadReal();}
-{operadorSuma}            {return ops.unidadSuma();}
-{operadorResta}           {return ops.unidadResta();}
-{operadorMultiplicacion}  {return ops.unidadMul();}
-{operadorDivision}        {return ops.unidadDiv();}
-{parentesisApertura}      {return ops.unidadPAp();}
-{parentesisCierre}        {return ops.unidadPCierre();} 
-{igual}                   {return ops.unidadIgual();} 
-{coma}                    {return ops.unidadComa();}
-[^]                       {ops.error();}  
+{separador}         {}
+{var}               {return ops.unidadVar();}
+{may}               {return ops.unidadMay();}
+{mayi}           	{return ops.unidadMayi();}
+{men}            	{return ops.unidadMen();}
+{meni}              {return ops.unidadMeni();}
+{dist}            	{return ops.unidadDist();}
+{igual}           	{return ops.unidadIgual();}
+{pap}  			 	{return ops.unidadPap();}
+{pci}        		{return ops.unidadPci();}
+{mas}     			{return ops.unidadMas();}
+{menos}        		{return ops.unidadMenos();} 
+{por}               {return ops.unidadPor();} 
+{div}               {return ops.unidadDiv();}
+{numr}              {return ops.unidadNumR();}
+{asig}              {return ops.unidadAsig();}
+{nxt}               {return ops.unidadNxt();}
+{sec}               {return ops.unidadSec();}
+[^]                 {ops.error();}  

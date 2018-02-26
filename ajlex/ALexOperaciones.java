@@ -8,92 +8,92 @@ public class ALexOperaciones {
   	}
 
 	private UnidadLexica unidadVar() {
-     switch(lex.toString()) {
+     switch(alex.lex.toString()) {
          case "true":  
-            return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.TRUE);
+            return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.TRUE);
          case "false":    
-            return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.FALSE);
+            return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.FALSE);
          case "and":    
-             return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.AND);            
+             return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.AND);            
          case "or":    
-             return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.OR); 
+             return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.OR); 
          case "not":    
-             return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.NOT); 
+             return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.NOT); 
          case "num":
-        	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.NUM);
+        	 return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.NUM);
          case "bool":
-        	 return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.BOOL);
+        	 return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.BOOL);
          default:    
-        	 return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.VAR,lex.toString());     
+        	 return new UnidadLexicaMultivaluada(alex.filaInicio,ClaseLexica.VAR,alex.lex.toString());     
       }
     }    
 
 	private UnidadLexica unidadMay() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MAY);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.MAY);     
 	}
 	   
 	private UnidadLexica unidadMayi() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MAYI);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.MAYI);     
 	}
 	   
 	private UnidadLexica unidadDist() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.DIST);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.DIST);     
 	}
 	   
 	private UnidadLexica unidadMen() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MEN);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.MEN);     
 	}  
 	   
 	private UnidadLexica unidadMeni() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MENI);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.MENI);     
 	}
 	   
 	private UnidadLexica unidadIgual() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.IGUAL);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.IGUAL);     
 	}
    
 	private UnidadLexica unidadPap() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.PAP);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.PAP);     
 	}
    
 	private UnidadLexica unidadPci() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.PCI);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.PCI);     
 	}
    
 	private UnidadLexica unidadMas() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MAS);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.MAS);     
 	}    
    
 	private UnidadLexica unidadMenos() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.MENOS);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.MENOS);     
 	}    
    
 	private UnidadLexica unidadPor() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.POR);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.POR);     
 	}
    
 	private UnidadLexica unidadDiv() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.DIV);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.DIV);     
 	}	   
    
 	private UnidadLexica unidadNumR() {
-		return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.NUMR,lex.toString());     
+		return new UnidadLexicaMultivaluada(alex.filaInicio,ClaseLexica.NUMR,alex.lex.toString());     
 	}
    
 	private UnidadLexica unidadAsig() {
-    	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.ASIG);     
+    	return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.ASIG);     
 	}
    
 	private UnidadLexica unidadNxt() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.NXT);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.NXT);     
 	}
    
 	private UnidadLexica unidadSec() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.SEC);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.SEC);     
 	}
    
 	private UnidadLexica unidadEOF() {
-		return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.EOF);     
+		return new UnidadLexicaUnivaluada(alex.filaInicio,ClaseLexica.EOF);     
 	}
 
 	public void error() {
