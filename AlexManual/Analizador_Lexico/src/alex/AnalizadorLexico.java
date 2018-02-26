@@ -96,12 +96,14 @@ public class AnalizadorLexico {
 		case R_ASIG:
 			if(hayIgual()) transita(Estado.R_IGUAL);
 			else return unidadAsig();
+			break;
 		case R_DEC:
 			if(hayDigito()) transita(Estado.R_DEC);
 			else if(hayExponente()) transita(Estado.R_EX);
 			else return unidadNumR();
+			break;
 		case R_SIGNO:
-			if(hayDigito()) transita(Estado.R_EX);
+			if(hayDigito()) transita(Estado.R_ENT);
 			else error();
 			break;
 		case R_DIST: return unidadDist();
@@ -126,9 +128,11 @@ public class AnalizadorLexico {
 		case R_MAS:
 			if(hayDigito()) transita(Estado.R_ENT);
 			else return unidadMas();
+			break;
 		case R_MAY:
 			if(hayIgual()) transita(Estado.R_MAYI);
 			else return unidadMay();
+			break;
 		case R_MAYI: return unidadMayi();
 		case R_MEN:
 			if(hayIgual()) transita(Estado.R_MENI);
@@ -150,6 +154,7 @@ public class AnalizadorLexico {
 		case R_VAR:
 			if(hayLetra() || hayDigito() || hayBarra()) transita(Estado.R_VAR);
 			else return unidadVar();
+			break;
 		case R_NXT: return unidadNxt();
 		default:
 			error();
