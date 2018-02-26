@@ -110,6 +110,7 @@ public class AnalizadorLexico {
 		case R_DIV: return unidadDiv();
 		case R_E:
 			if(haySuma() || hayResta()) transita(Estado.R_SIGNO);
+			else if(hayDigito()) transita(Estado.R_ENT);
 			else error();
 			break;
 		case R_ENT:
@@ -118,7 +119,10 @@ public class AnalizadorLexico {
 			else if(hayExponente()) transita(Estado.R_E);
 			else return unidadNumR();
 			break;
-		case R_EX: return unidadNumR();
+		case R_EX: 
+			if(hayDigito()) transita(Estado.R_ENT);
+			else return unidadNumR();
+			break;
 		case R_EXL:
 			if(hayIgual()) transita(Estado.R_DIST);
 			else error();
@@ -141,7 +145,7 @@ public class AnalizadorLexico {
 		case R_MENI: return unidadMeni();
 		case R_MENOS:
 			if(hayDigito()) transita(Estado.R_ENT);
-			else unidadMenos();
+			else return unidadMenos();
 			break;
 		case R_P:
 			if(hayDigito()) transita(Estado.R_DEC);
