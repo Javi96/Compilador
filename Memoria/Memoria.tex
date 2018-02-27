@@ -77,7 +77,7 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
 
 	\textbf{(\mystar )  SEC:} [\&][\&]
 	
-	\textbf{(\mystar ) VAR:} LETRA([LETRA|DIG|\textbackslash \_]*)
+	\textbf{(\mystar ) VAR:} \underline{LETRA}([\underline{LETRA}|\underline{DIG}|\textbackslash \_]*)
 	
 	\tab \textbf{LETRA:} ([a-z,A-Z])
 	
@@ -91,15 +91,15 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
 	
 	\textbf{(\mystar ) FALSE:} ([f][a][l][s][e])
 	
-	\textbf{(\mystar ) NUMR:} SIGNO?(DIG+(DEC)?(EXP)?) 
+	\textbf{(\mystar ) NUMR:} \underline{SIGNO}?(\underline{DIG}+(\underline{DEC})?(\underline{EX})?) 
+	
+	\tab \textbf{DEC:} (\textbackslash .)\underline{DIG}+ 
+	
+	\tab \textbf{EX:} [e|E](\underline{SIGNO}?\underline{DIG}+)
 	
 	\tab \textbf{SIGNO:} [\textbackslash +,\textbackslash -] 
 	
-	\tab \textbf{DIG:} [0-9] 
-	
-	\tab \textbf{DEC:} (\textbackslash .)DIG+ 
-	
-	\tab \textbf{EX:} [e|E](SIGNO?DIG+(DEC)?)	
+	\tab \textbf{DIG:} [0-9]
 	
 	\textbf{(\mystar ) AND:} ([a][n][d])
 	
@@ -111,7 +111,7 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
 	
 	\textbf{(\mystar ) MENOS:} (\textbackslash -)
 	
-	\textbf{(\mystar ) DIV:} (\textbackslash /)
+	\textbf{(\mystar ) DIV:} (/)
 	
 	\textbf{(\mystar ) POR:} (\textbackslash *)
 	
@@ -131,9 +131,9 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
 	
 	\textbf{(\mystar ) NXT:} (;)
 	
-	\textbf{(\mystar ) PAP:} ("`("')
+	\textbf{(\mystar ) PAP:} (\textbackslash $($)
 	
-	\textbf{(\mystar ) PCIERRE:} ("`)"')
+	\textbf{(\mystar ) PCIERRE:} (\textbackslash $)$)
 	
 	\textbf{(\mystar ) SEP:} ["` "',\textbackslash t,\textbackslash n,\textbackslash r,\textbackslash b]
 	
@@ -201,6 +201,7 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
           (q_18) edge [bend left=40] node [fill=white, anchor=center, pos=0.5] {Dig} (q_20)
                  edge node [fill=white, anchor=center, pos=0.5] {-,+} (q_19)
 					(q_19) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_20)
+					(q_20) edge [loop left] node {Dig} (q_20)
           (q_21) edge [loop above=0.5] node {Letra|Dig|\_} (q_21)
           (q_23) edge node [fill=white, anchor=center, pos=0.5] {\&} (q_24);
   \end{tikzpicture}
