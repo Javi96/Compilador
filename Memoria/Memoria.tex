@@ -1,9 +1,13 @@
-\documentclass[11pt,oneside,onecolumn,openany]{book}
+\documentclass[11pt,oneside,onecolumn,openany,spanish]{book}
 
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
-\usepackage[spanish,activeacute]{babel}
+\usepackage{babel}
+%\usepackage[spanish,activeacute]{babel}
 \usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{babel}
 
 \title{Práctica PL}
 \author{Elena Kaloyanova Popova y Álvaro Borja Velasco García}
@@ -11,6 +15,8 @@
 
 \begin{document}
 % cuerpo del documento
+\newcommand{\mystar}{{\fontfamily{lmr}\selectfont$\star$}}
+\newcommand\tab[1][0.7cm]{\hspace*{#1}}
 
 \maketitle
 \tableofcontents % crea el índice
@@ -35,83 +41,171 @@ Todo programa consta de dos secciones: una para las declaraciones y otra para la
 Las clases léxicas que hemos considerado para representar los tokens del lenguaje son las siguientes:
 
 \begin{itemize}
-%\textbf{Declaraciones:} Compuestas por el nombre de tipo y el nombre de variable. \textbf{DECL}
 	\item \textbf{SEC:} Representa el seccionador de las dos partes del programa ("`\&\&"').
-	\item \textbf{TIPO:} Representa el nombre del tipo. Puede ser únicamente o "`num"' o "`bool"'.
 	\item \textbf{NUM:} Palabra reservada "`num"'.
 	\item \textbf{BOOL:} Palabra reservada "`bool"'.
 	\item \textbf{VAR:} Representa el nombre de la variable. Comienza necesariamente por una letra, seguida por una secuencia de cero o más letras, dígitos o el símbolo "`\_"'.
 	\item \textbf{ASIG:} Representa el signo igual de las asignaciones.
-	\item \textbf{EXPR:} Representa una expresión. Puede ser básica o compuesta, según si aparece un único elemento o dos acompañados de un operador.
-%\textbf{Instruccion:} Constan de una variable seguida de un IGUAL seguido por una expresión (asignaciones). \textbf{INSTR}
-	\item \textbf{BASICA:} Se corresponde a una expresión básica. Puede ser un número real con o sin signo, o bien un booleano,"`true"' o "`false"'. También puede ser el nombre de una variable que se correspondería a un número.
+	\item \textbf{NXT:} Representa el signo "`;"' que marca el comienzo de la siguiente instrucción.
 	\item \textbf{TRUE:} Palabra reservada "`true"'.
 	\item \textbf{FALSE:} Palabra reservada "`false"'.
-	\item \textbf{COMP:} Se corresponde a una expresión compuesta que en el fondo no es más que dos básicas separadas por un operador.
-	\item \textbf{NUM:} Representa un número real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
-	\item \textbf{SIGNO:} Puede ser el signo + o el signo -.
-	\item \textbf{DIG:} Cualquier dígito del 0 al 9.
-	\item \textbf{DEC} Parte decimal que consta de un punto seguido por una sucesión de uno o más dígitos.
-	\item \textbf{EX:} Parte exponencial que consta de un letra E mayúscula o minúscula seguida, opcionalmente, por un signo + o -, y obligatoriamente por una parte entera.
-	\item \textbf{OP:} Representa un operador que puede ser aritmético, lógico o relacional.
-	\item \textbf{OPAR:} Operador aritmético, es decir: un signo (+ o -), * o /.
-	\item \textbf{OPLOG:} Operador lógico, es decir: "`and"', "`or"' o "`not"'.
+	\item \textbf{NUMR:} Representa un número real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
+	\item \textbf{MAS:} Operador suma (\textbackslash +).
+	\item \textbf{MENOS:} Operador resta (\textbackslash -).
+	\item \textbf{POR:} Operador multiplicación (\textbackslash *).
+	\item \textbf{DIV:} Operador división (/).
 	\item \textbf{AND:} Palabra reservada "`and"'.
 	\item \textbf{OR:} Palabra reservada "`or"'.
 	\item \textbf{NOT:} Palabra reservada "`not"'.
-	\item \textbf{OPREL:} Operador relacional, es decir: <,>,<=,>=,== o !=.
+	\item \textbf{MAY:} Operador mayor (>).
+	\item \textbf{MEN:} Operador menor (<).
+	\item \textbf{MAYI:} Operador mayor o igual (>=).
+	\item \textbf{MENI:} Operador menor o igual (<=).
+	\item \textbf{IGUAL:} Operador igual a (==).
+	\item \textbf{DIST:} Operador distinto a (!=).
 	\item \textbf{PAP:} Signo de apertura de paréntesis.
 	\item \textbf{PCI:} Signo de cierre de paréntesis.
-	\item \textbf{SEP:} Separadores: espacio en blanco, tabulador, retorno de carro, salto de línea y backspace.
+	\item \textbf{EOF:} Representa el final de fichero.
 
 \end{itemize}
 %---------------------------------------------------------------------
 \section{Especificación Formal}
 %---------------------------------------------------------------------
 \label{cap2:sec:especificacion_formal}
-Las definiciones regulares que definen el lenguaje de forma general son las siguientes:
-
-\begin{itemize}
-	\item \textbf{PROGRAMA:} DECL.SEC.INSTR
-	\item \textbf{DECLARACION:} (TIPO.SEP.VAR;)*|(TIPO.SEP.VAR)
-	\item \textbf{INSTRUCCION:} VAR=EXPR
-\end{itemize}
 
 Las definiciones regulares correspondientes a las clases léxicas definidas son:
 
-\begin{itemize}
-	\item \textbf{SEC:} \&\&
-	\item \textbf{TIPO:} (NUM|BOOL)
-	\item \textbf{NUM:} ([n][u][m])
-	\item \textbf{BOOL:} ([b][o][o][l])
-	\item \textbf{VAR:} ([a-z,A-Z][a-z,A-Z,0-9,\_]*) 
-	\item \textbf{EXPR:} (BASICA.OP.BASICA | BASICA.OP.COMP | COMP.OP.COMP | COMP.OP.BASICA) 
-	\item \textbf{BASICA:} [VAR,NUM,true,false]
-	\item \textbf{TRUE:} ([t][r][u][e])
-	\item \textbf{FALSE:} ([f][a][l][s][e])
-	\item \textbf{COMP:} BASICA.OP.BASICA
-	\item \textbf{NUM:} SIGNO?(DIG+(DEC)?(EXP)?) 
-	\item \textbf{SIGNO:} [+,-] 
-	\item \textbf{DIG:} [0-9] 
-	\item \textbf{DEC:} .(DIG+) 
-	\item \textbf{EX:} [e|E](SIGNO?DIG+(DEC)?) 
-	\item \textbf{OP:} [OPAR,OPLOG,OPREL]
-	\item \textbf{OPAR:} [SIGNO,*,/] 
-	\item \textbf{OPLOG:} (AND|OR|NOT)
-	\item \textbf{AND:} ([a][n][d])
-	\item \textbf{OR:} ([o][r])
-	\item \textbf{NOT:} ([n][o][t])
-	\item \textbf{OPREL:} [<,>,<=,>=,==,!=]
-	\item \textbf{PAP:} ("`("')
-	\item \textbf{PCIERRE:} ("`)"')
-	\item \textbf{SEP:} [BLANCO,TAB,ENDL,CARRO,BACK]
+	\textbf{(\mystar )  SEC:} [\&][\&]
 	
-\end{itemize}
+	\textbf{(\mystar ) VAR:} \underline{LETRA}([\underline{LETRA}|\underline{DIG}|\textbackslash \_]*)
+	
+	\tab \textbf{LETRA:} ([a-z,A-Z])
+	
+	\tab \textbf{DIG:} ([0-9])
+	
+	\textbf{(\mystar ) NUM:} ([n][u][m])
+	
+	\textbf{(\mystar ) BOOL:} ([b][o][o][l])
+	
+	\textbf{(\mystar ) TRUE:} ([t][r][u][e])
+	
+	\textbf{(\mystar ) FALSE:} ([f][a][l][s][e])
+	
+	\textbf{(\mystar ) NUMR:} \underline{SIGNO}?(\underline{DIG}+(\underline{DEC})?(\underline{EX})?) 
+	
+	\tab \textbf{DEC:} (\textbackslash .)\underline{DIG}+ 
+	
+	\tab \textbf{EX:} [e|E](\underline{SIGNO}?\underline{DIG}+)
+	
+	\tab \textbf{SIGNO:} [\textbackslash +,\textbackslash -] 
+	
+	\tab \textbf{DIG:} [0-9]
+	
+	\textbf{(\mystar ) AND:} ([a][n][d])
+	
+	\textbf{(\mystar ) OR:} ([o][r])
+	
+	\textbf{(\mystar ) NOT:} ([n][o][t])
+	
+	\textbf{(\mystar ) MAS:} (\textbackslash +)
+	
+	\textbf{(\mystar ) MENOS:} (\textbackslash -)
+	
+	\textbf{(\mystar ) DIV:} (/)
+	
+	\textbf{(\mystar ) POR:} (\textbackslash *)
+	
+	\textbf{(\mystar ) MAY:} (>)
+	
+	\textbf{(\mystar ) MEN:} (<)
+	
+	\textbf{(\mystar ) MAYI:} ([>][=])
+	
+	\textbf{(\mystar ) MENI:} ([<][=])
+	
+	\textbf{(\mystar ) IGUAL:} ([=][=])
+	
+	\textbf{(\mystar ) DIST:} ([!][=])
+	
+	\textbf{(\mystar ) ASIG:} (=)
+	
+	\textbf{(\mystar ) NXT:} (;)
+	
+	\textbf{(\mystar ) PAP:} (\textbackslash $($)
+	
+	\textbf{(\mystar ) PCIERRE:} (\textbackslash $)$)
+	
+	\textbf{(\mystar ) SEP:} ["` "',\textbackslash t,\textbackslash n,\textbackslash r,\textbackslash b]
+	
 %---------------------------------------------------------------------
 \section{Diseño}
 %---------------------------------------------------------------------
 \label{cap2:sec:disenyo}
-El autómata que reconocería el lenguaje es el siguiente:
 
-
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state] (q_0) {INICIO};
+    \node[state, accepting] (q_1) [above=3of q_0]  {R\_ASIG};
+    \node[state, accepting] (q_2) [left=2.5of q_1] {R\_PCI};
+    \node[state, accepting] (q_3) [above=3of q_2] {R\_PAP};
+    \node[state, accepting] (q_4) [above=3of q_1] {R\_IGUAL};
+    \node[state, accepting] (q_5) [right=2.3of q_1] {R\_MEN};
+    \node[state, accepting] (q_6) [right=2of q_5] {R\_MAY};
+    \node[state] (q_7) [right=2of q_6] {R\_EXL};
+    \node[state, accepting] (q_8) [above=3of q_5] {R\_MENI};
+    \node[state, accepting] (q_9) [above=3of q_6] {R\_MAYI};
+    \node[state, accepting] (q_10) [above=3of q_7] {R\_DIST};
+    \node[state, accepting] (q_11) [below=3of q_0] {R\_MENOS};
+		\node[state, accepting] (q_12) [left=3of q_11] {R\_MAS};
+    \node[state, accepting] (q_13) [right=3of q_11] {R\_POR};
+    \node[state, accepting] (q_14) [below=of q_13] {R\_DIV};
+    \node[state, accepting] (q_15) [below=4of q_11] {R\_ENT};
+    \node[state] (q_16) [right=3of q_15] {R\_P};
+    \node[state, accepting] (q_17) [right=3of q_16] {R\_DEC};
+    \node[state] (q_18) [below=3.2of q_17] {R\_E};
+    \node[state] (q_19) [left=3of q_18] {R\_SIGNO};
+    \node[state, accepting] (q_20) [left=3of q_19] {R\_EX};
+    \node[state, accepting] (q_21) [right=8of q_0] {R\_VAR};
+    \node[state, accepting] (q_22) [below=2of q_21] {R\_FIN};
+    \node[state] (q_23) [below=6.5of q_7] {R\_AMP};
+    \node[state, accepting] (q_24) [below=4of q_22] {R\_SEC};
+		\node[state, accepting] (q_25) [below=1.8of q_2] {R\_NXT};
+			\path[->]
+          (q_0) edge [loop left] node {$[$' ',\textbackslash t,\textbackslash n,\textbackslash r,\textbackslash b]} (q_0)
+                edge node [fill=white, anchor=center, pos=0.5]          {=} (q_1)
+                edge node [fill=white, anchor=center, pos=0.5]     {$)$} (q_2)
+                edge node [fill=white, anchor=center, pos=0.5]           {$($} (q_3)
+                edge node [fill=white, anchor=center, pos=0.5]           {$<$} (q_5)
+                edge [bend right=5] node [fill=white, anchor=center, pos=0.5] {$>$} (q_6)
+                edge [bend right=25] node [fill=white, anchor=center, pos=0.5] {!} (q_7)
+                edge node [fill=white, anchor=center, pos=0.5] {-} (q_11)
+                edge node [fill=white, anchor=center, pos=0.5] {+} (q_12)
+                edge node [fill=white, anchor=center, pos=0.5] {$\ast$} (q_13)
+                edge  node [fill=white, anchor=center, pos=0.5] {/} (q_14)
+                edge [bend right=35]  node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+                edge  node [fill=white, anchor=center, pos=0.5] {Letra} (q_21)
+                edge  node [fill=white, anchor=center, pos=0.5] {EOF} (q_22)
+                edge  node [fill=white, anchor=center, pos=0.5] {\&} (q_23)
+								edge  node [fill=white, anchor=center, pos=0.5] {;} (q_25)
+          (q_1) edge  node[fill=white, anchor=center, pos=0.5]     {=} (q_4)
+          (q_5) edge  node [fill=white, anchor=center, pos=0.5]            {=} (q_8)
+          (q_6) edge  node [fill=white, anchor=center, pos=0.5]            {=} (q_9)
+          (q_7) edge node [fill=white, anchor=center, pos=0.5] {=} (q_10)
+          (q_11) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+          (q_12) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_15)
+          (q_15) edge [loop below] node {Dig} (q_15)
+                 edge node [fill=white, anchor=center, pos=0.5] {\textbackslash .} (q_16)
+                 edge node [fill=white, anchor=center, pos=0.5] {e|E} (q_18)
+          (q_16) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_17)
+          (q_17) edge [loop above] node {Dig} (q_17)
+                 edge node [fill=white, anchor=center, pos=0.5] {e|E} (q_18)
+          (q_18) edge [bend left=40] node [fill=white, anchor=center, pos=0.5] {Dig} (q_20)
+                 edge node [fill=white, anchor=center, pos=0.5] {-,+} (q_19)
+					(q_19) edge node [fill=white, anchor=center, pos=0.5] {Dig} (q_20)
+					(q_20) edge [loop left] node {Dig} (q_20)
+          (q_21) edge [loop above=0.5] node {Letra|Dig|\_} (q_21)
+          (q_23) edge node [fill=white, anchor=center, pos=0.5] {\&} (q_24);
+  \end{tikzpicture}
+	
 \end{document}
+
+
