@@ -235,19 +235,20 @@ class AnalizadorLexicoJLex {
 		/* 24 */ YY_NOT_ACCEPT,
 		/* 25 */ YY_NO_ANCHOR,
 		/* 26 */ YY_NO_ANCHOR,
-		/* 27 */ YY_NO_ANCHOR
+		/* 27 */ YY_NO_ANCHOR,
+		/* 28 */ YY_NOT_ACCEPT
 	};
 	private int yy_cmap[] = unpackFromString(1,65538,
 "20:8,1:3,20:2,1,20:18,1,8,20:4,19,20,9,10,13,11,15,12,16,14,3:10,20,18,7,6," +
 "5,20:2,2:4,17,2:21,20:4,4,20,2:4,17,2:21,20:65413,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,28,
-"0,1:2,2,3,4,5,6,1:2,7:2,1:8,8,3,1,9,10,11,7,12")[0];
+	private int yy_rmap[] = unpackFromString(1,29,
+"0,1:2,2,3,1,4,5,6,1:2,7:2,1:8,8,9,10,11,12,7,13,12")[0];
 
-	private int yy_nxt[][] = unpackFromString(13,21,
-"1,2,3,4,22,5,6,7,25,8,9,10,11,12,13,26,22,3,14,27,22,-1:23,3:3,-1:12,3,-1:6" +
-",21,-1:12,24,-1:10,15,-1:20,16,-1:20,17,-1:17,21,-1:20,23,-1:7,23:2,-1:2,23" +
-",-1:8,23,-1:20,24,-1:11,20,-1,20,-1:9,18,-1:33,19,-1");
+	private int yy_nxt[][] = unpackFromString(14,21,
+"1,2,3,4,5,6,7,8,23,9,10,11,12,13,14,26,5,3,15,27,5,-1:23,3:3,-1:12,3,-1:6,4" +
+",-1:12,21,24,-1:9,16,-1:20,17,-1:20,18,-1:17,4,-1:20,22,-1:20,22,-1:13,24,-" +
+"1:9,19,-1:17,25,-1:7,28:2,-1:2,28,-1:8,25,-1:36,20,-1");
 
 	public UnidadLexica yylex ()
 		throws java.io.IOException {
@@ -307,83 +308,83 @@ class AnalizadorLexicoJLex {
 					case -4:
 						break;
 					case 4:
-						{ops.error();}
+						{return ops.unidadNumR();}
 					case -5:
 						break;
 					case 5:
-						{return ops.unidadMay();}
+						{ops.error();}
 					case -6:
 						break;
 					case 6:
-						{return ops.unidadAsig();}
+						{return ops.unidadMay();}
 					case -7:
 						break;
 					case 7:
-						{return ops.unidadMen();}
+						{return ops.unidadAsig();}
 					case -8:
 						break;
 					case 8:
-						{return ops.unidadPap();}
+						{return ops.unidadMen();}
 					case -9:
 						break;
 					case 9:
-						{return ops.unidadPci();}
+						{return ops.unidadPap();}
 					case -10:
 						break;
 					case 10:
-						{return ops.unidadMas();}
+						{return ops.unidadPci();}
 					case -11:
 						break;
 					case 11:
-						{return ops.unidadMenos();}
+						{return ops.unidadMas();}
 					case -12:
 						break;
 					case 12:
-						{return ops.unidadPor();}
+						{return ops.unidadMenos();}
 					case -13:
 						break;
 					case 13:
-						{return ops.unidadDiv();}
+						{return ops.unidadPor();}
 					case -14:
 						break;
 					case 14:
-						{return ops.unidadNxt();}
+						{return ops.unidadDiv();}
 					case -15:
 						break;
 					case 15:
-						{return ops.unidadMayi();}
+						{return ops.unidadNxt();}
 					case -16:
 						break;
 					case 16:
-						{return ops.unidadIgual();}
+						{return ops.unidadMayi();}
 					case -17:
 						break;
 					case 17:
-						{return ops.unidadMeni();}
+						{return ops.unidadIgual();}
 					case -18:
 						break;
 					case 18:
-						{return ops.unidadDist();}
+						{return ops.unidadMeni();}
 					case -19:
 						break;
 					case 19:
-						{return ops.unidadSec();}
+						{return ops.unidadDist();}
 					case -20:
 						break;
 					case 20:
-						{return ops.unidadNumR();}
+						{return ops.unidadSec();}
 					case -21:
 						break;
 					case 22:
-						{ops.error();}
+						{return ops.unidadNumR();}
 					case -22:
 						break;
 					case 23:
-						{return ops.unidadNumR();}
+						{ops.error();}
 					case -23:
 						break;
 					case 25:
-						{ops.error();}
+						{return ops.unidadNumR();}
 					case -24:
 						break;
 					case 26:

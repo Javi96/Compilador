@@ -4,8 +4,8 @@ public class UnidadLexicaMultivaluada extends UnidadLexica{
 	
 	private String lexema;
 	
-	public UnidadLexicaMultivaluada(int fila, int columna, ClaseLexica clase, String lexema) {
-		super(fila, columna, clase);
+	public UnidadLexicaMultivaluada(int fila, ClaseLexica clase, String lexema) {
+		super(fila, clase);
 		this.lexema = lexema;
 	}
 
@@ -15,6 +15,6 @@ public class UnidadLexicaMultivaluada extends UnidadLexica{
 	}
 
 	public String toString() {
-	    return "[clase:"+clase()+",fila:"+fila()+",col:"+columna()+",lexema:"+lexema()+"]";  
+	    return "[clase:"+clase()+",fila:"+fila()+",lexema:"+lexema()+"]";  
 	}
 }
