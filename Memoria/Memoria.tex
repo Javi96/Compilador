@@ -5,6 +5,7 @@
 \usepackage{babel}
 %\usepackage[spanish,activeacute]{babel}
 \usepackage{mathtools}
+\usepackage{multirow} 
 \usepackage{tikz}
 \usetikzlibrary{automata,positioning}
 \usetikzlibrary{babel}
@@ -206,6 +207,173 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
           (q_23) edge node [fill=white, anchor=center, pos=0.5] {\&} (q_24);
   \end{tikzpicture}
 	
+%---------------------------------------------------------------------
+%                   Capítulo 3 - Analizador sintáctico
+%---------------------------------------------------------------------
+\chapter{Fase 2: Analizador sintáctico}
+En esta fase desarrollaremos el analizador sintáctico descendente predictivo para el lenguaje descrito en la primera fase. 
+%---------------------------------------------------------------------
+\section{Gramática incontextual}
+%---------------------------------------------------------------------
+\label{cap3:sec:gramatica_incontextual}
+Empezaremos definiendo la gramática incontextual que define el lenguaje. Los operadores que utiliza nuestro lenguaje aparecen en la tabla \ref{tabla:operadores}.
+
+\begin{table}[htbp]
+	\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Operador & Prioridad & Tipo & Asociatividad \\
+			\hline 
+			+,- & 0 & Binario infijo & Asocia Izquierda \\ \hline
+			\multirow{ 2}{*} and & {1} & {Binarios infijos} & Asocia Derecha \\ or & & & No asocia \\ \hline
+			Relacionales & 2 & Binario infijo & No asocia \\ \hline
+			*,/ & 3 & Binario infijo & Asocia Izquierda \\ \hline
+			\multirow{ 2}{*} - & {4} & {Unarios prefijos} & Asocia \\ not & & & No asocia \\
+			\hline
+		\end{tabular}
+		\caption{Operadores}
+		\label{tabla:operadores}
+\end{table}
+
+La gramática incotextual obtenida apartir de la definición y los operadores es la siguiente:
+
+Programa $\rightarrow$ LDs\underline{SEC}LIs
+
+LDs $\rightarrow$ LDs\underline{NXT}Declaracion
+
+LDs $\rightarrow$ Declaracion
+
+Declaracion $\rightarrow$ \underline{NUM}\underline{VAR}
+
+Declaracion $\rightarrow$ \underline{BOOL}\underline{VAR}
+
+LIs $\rightarrow$ LIs\underline{NXT}Instruccion
+
+LIs $\rightarrow$ Instruccion
+
+Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
+
+EXP0 $\rightarrow$ EXP0 OP0 EXP1
+
+EXP0 $\rightarrow$ EXP1 
+
+EXP1 $\rightarrow$ EXP2 \underline{AND} EXP1 
+
+EXP1 $\rightarrow$ EXP2 \underline{OR} EXP2  
+
+EXP1 $\rightarrow$ EXP2
+
+EXP2 $\rightarrow$ EXP3 OP2 EXP3 
+
+EXP2 $\rightarrow$ EXP3 
+
+EXP3 $\rightarrow$ EXP3 OP2 EXP4 
+
+EXP3 $\rightarrow$ EXP4 
+
+EXP4 $\rightarrow$ \underline{MENOS} EXP4
+
+EXP4 $\rightarrow$ \underline{NOT} EXP5 
+
+EXP5 $\rightarrow$ \underline{NUMR}
+
+EXP5 $\rightarrow$ \underline{VAR}
+
+EXP5 $\rightarrow$ \underline{PAP}EXP0\underline{PCIERRE} 
+
+OP0 $\rightarrow$ \underline{MAS}
+
+OP0 $\rightarrow$ \underline{MENOS} 
+
+OP2 $\rightarrow$ \underline{MAY} 
+
+OP2 $\rightarrow$ \underline{MEN} 
+
+OP2 $\rightarrow$ \underline{MAYI} 
+
+OP2 $\rightarrow$ \underline{MENI} 
+
+OP2 $\rightarrow$ \underline{IGUAL} 
+
+OP2 $\rightarrow$ \underline{DIST} 
+
+OP3 $\rightarrow$ \underline{POR} 
+
+OP3 $\rightarrow$ \underline{DIV} 
+
+Necesitamos transformar la gramática a una LL(1). Una vez transformada, la gramática queda de la siguiente manera:
+
+Programa $\rightarrow$ LDs\underline{SEC}LIs
+
+LDs $\rightarrow$ LDs\underline{NXT}Declaracion
+
+LDs $\rightarrow$ Declaracion
+
+Declaracion $\rightarrow$ \underline{NUM}\underline{VAR}
+
+Declaracion $\rightarrow$ \underline{BOOL}\underline{VAR}
+
+LIs $\rightarrow$ LIs\underline{NXT}Instruccion
+
+LIs $\rightarrow$ Instruccion
+
+Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
+
+EXP0 $\rightarrow$ EXP0 OP0 EXP1
+
+EXP0 $\rightarrow$ EXP1 
+
+EXP1 $\rightarrow$ EXP2 R1
+
+R1 $\rightarrow$ \underline{AND} EXP1 
+
+R1 $\rightarrow$ \underline{OR} EXP2  
+
+R1 $\rightarrow$ $\epsilon$
+
+EXP2 $\rightarrow$ EXP3 R2 
+
+R2 $\rightarrow$ OP2 EXP3 
+
+R2 $\rightarrow$ $\epsilon$ 
+
+EXP3 $\rightarrow$ EXP3 OP2 EXP4 
+
+EXP3 $\rightarrow$ EXP4 
+
+EXP4 $\rightarrow$ \underline{MENOS} EXP4
+
+EXP4 $\rightarrow$ \underline{NOT} EXP5 
+
+EXP5 $\rightarrow$ \underline{NUMR}
+
+EXP5 $\rightarrow$ \underline{VAR}
+
+EXP5 $\rightarrow$ \underline{PAP}EXP0\underline{PCIERRE} 
+
+OP0 $\rightarrow$ \underline{MAS}
+
+OP0 $\rightarrow$ \underline{MENOS} 
+
+OP2 $\rightarrow$ \underline{MAY} 
+
+OP2 $\rightarrow$ \underline{MEN} 
+
+OP2 $\rightarrow$ \underline{MAYI} 
+
+OP2 $\rightarrow$ \underline{MENI} 
+
+OP2 $\rightarrow$ \underline{IGUAL} 
+
+OP2 $\rightarrow$ \underline{DIST} 
+
+OP3 $\rightarrow$ \underline{POR} 
+
+OP3 $\rightarrow$ \underline{DIV} 
+
+
 \end{document}
 
 
+
+ 
