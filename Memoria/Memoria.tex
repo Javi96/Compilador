@@ -5,6 +5,7 @@
 \usepackage{babel}
 %\usepackage[spanish,activeacute]{babel}
 \usepackage{mathtools}
+\usepackage{multirow} 
 \usepackage{tikz}
 \usetikzlibrary{automata,positioning}
 \usetikzlibrary{babel}
@@ -22,21 +23,14 @@
 \tableofcontents % crea el índice
 
 %---------------------------------------------------------------------
-%                   Capítulo 1 - Introducción
-%---------------------------------------------------------------------
-\chapter{Introducción}
-
-Esta práctica consistirá en el desarrollo de un procesador de lenguajes sobre el siguiente lenguaje:
-
-%---------------------------------------------------------------------
-%                   Capítulo 2 - Analizador léxico
+%                   Capítulo 1 - Analizador léxico
 %---------------------------------------------------------------------
 \chapter{Fase 1: Analizador léxico}
 
 %---------------------------------------------------------------------
 \section{Clases Léxicas}
 %---------------------------------------------------------------------
-\label{cap2:sec:clases_lexicas}
+\label{cap1:sec:clases_lexicas}
 Todo programa consta de dos secciones: una para las declaraciones y otra para las instrucciones, separadas por un token "`\&\&"'. La sección de declaraciones está formada por una serie de declaraciones compuestas por el nombre de tipo y el de variable y separadas por un punto y coma. La sección de instrucciones, por su parte, consta de una serie de asignaciones (variable=expresión), separadas también por un punto y coma.
 Las clases léxicas que hemos considerado para representar los tokens del lenguaje son las siguientes:
 
@@ -49,7 +43,7 @@ Las clases léxicas que hemos considerado para representar los tokens del lenguaj
 	\item \textbf{NXT:} Representa el signo "`;"' que marca el comienzo de la siguiente instrucción.
 	\item \textbf{TRUE:} Palabra reservada "`true"'.
 	\item \textbf{FALSE:} Palabra reservada "`false"'.
-	\item \textbf{NUMR:} Representa un número real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
+	\item \textbf{NUMR:} Representa un n?mero real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
 	\item \textbf{MAS:} Operador suma (\textbackslash +).
 	\item \textbf{MENOS:} Operador resta (\textbackslash -).
 	\item \textbf{POR:} Operador multiplicación (\textbackslash *).
@@ -71,7 +65,7 @@ Las clases léxicas que hemos considerado para representar los tokens del lenguaj
 %---------------------------------------------------------------------
 \section{Especificación Formal}
 %---------------------------------------------------------------------
-\label{cap2:sec:especificacion_formal}
+\label{cap1:sec:especificacion_formal}
 
 Las definiciones regulares correspondientes a las clases léxicas definidas son:
 
@@ -140,7 +134,7 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
 %---------------------------------------------------------------------
 \section{Diseño}
 %---------------------------------------------------------------------
-\label{cap2:sec:disenyo}
+\label{cap1:sec:disenyo}
 
 \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
     \node[state] (q_0) {INICIO};
@@ -206,6 +200,378 @@ Las definiciones regulares correspondientes a las clases léxicas definidas son:
           (q_23) edge node [fill=white, anchor=center, pos=0.5] {\&} (q_24);
   \end{tikzpicture}
 	
+%---------------------------------------------------------------------
+%                   Capítulo 2 - Analizador sintáctico
+%---------------------------------------------------------------------
+\chapter{Fase 2: Analizador sintáctico}
+En esta fase desarrollaremos el analizador sintáctico descendente predictivo para el lenguaje descrito en la primera fase. 
+%---------------------------------------------------------------------
+\section{Gramática incontextual}
+%---------------------------------------------------------------------
+\label{cap2:sec:gramatica_incontextual}
+
+\subsection{Operadores}
+Empezaremos definiendo la gramática incontextual que define el lenguaje. Los operadores que utiliza nuestro lenguaje aparecen en la tabla \ref{tabla:operadores}.
+
+\begin{table}[htbp]
+	\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Operador & Prioridad & Tipo & Asociatividad \\
+			\hline 
+			+,- & 0 & Binario infijo & Asocia Izquierda \\ \hline
+			\multirow{ 2}{*} and & {1} & {Binarios infijos} & Asocia Derecha \\ or & & & No asocia \\ \hline
+			Relacionales & 2 & Binario infijo & No asocia \\ \hline
+			*,/ & 3 & Binario infijo & Asocia Izquierda \\ \hline
+			\multirow{ 2}{*} - & {4} & {Unarios prefijos} & Asocia \\ not & & & No asocia \\
+			\hline
+		\end{tabular}
+		\caption{Operadores}
+		\label{tabla:operadores}
+\end{table}
+
+\subsection{Gramática incontextual}
+La gramática incotextual obtenida apartir de la definición y los operadores es la siguiente:
+
+S $\rightarrow$ Programa \underline{EOF}
+
+Programa $\rightarrow$ LDs \underline{SEC} LIs
+
+LDs $\rightarrow$ LDs \underline{NXT} Declaracion
+
+LDs $\rightarrow$ Declaracion
+
+Declaracion $\rightarrow$ \underline{NUM} \underline{VAR}
+
+Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
+
+LIs $\rightarrow$ LIs \underline{NXT} Instruccion
+
+LIs $\rightarrow$ Instruccion
+
+Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
+
+
+
+EXP0 $\rightarrow$ EXP0 OP0 EXP1
+
+EXP0 $\rightarrow$ EXP1 
+
+EXP1 $\rightarrow$ EXP2 \underline{AND} EXP1 
+
+EXP1 $\rightarrow$ EXP2 \underline{OR} EXP2  
+
+EXP1 $\rightarrow$ EXP2
+
+EXP2 $\rightarrow$ EXP3 OP2 EXP3 
+
+EXP2 $\rightarrow$ EXP3 
+
+EXP3 $\rightarrow$ EXP3 OP2 EXP4 
+
+EXP3 $\rightarrow$ EXP4 
+
+EXP4 $\rightarrow$ \underline{MENOS} EXP4
+
+EXP4 $\rightarrow$ \underline{NOT} EXP5 
+
+EXP5 $\rightarrow$ \underline{NUMR}
+
+EXP5 $\rightarrow$ \underline{VAR}
+
+EXP5 $\rightarrow$ \underline{TRUE}
+
+EXP5 $\rightarrow$ \underline{FALSE}
+
+EXP5 $\rightarrow$ \underline{PAP} EXP0 \underline{PCIERRE} 
+
+OP0 $\rightarrow$ \underline{MAS}
+
+OP0 $\rightarrow$ \underline{MENOS} 
+
+OP2 $\rightarrow$ \underline{MAY} 
+
+OP2 $\rightarrow$ \underline{MEN} 
+
+OP2 $\rightarrow$ \underline{MAYI} 
+
+OP2 $\rightarrow$ \underline{MENI} 
+
+OP2 $\rightarrow$ \underline{IGUAL} 
+
+OP2 $\rightarrow$ \underline{DIST} 
+
+OP3 $\rightarrow$ \underline{POR} 
+
+OP3 $\rightarrow$ \underline{DIV} 
+
+\subsection{Gramática transformada LL(1)}
+Necesitamos transformar la gramática a una LL(1). Una vez transformada, la gramática queda de la siguiente manera:
+
+S $\rightarrow$ Programa \underline{EOF}
+
+Programa $\rightarrow$ LDs \underline{SEC} LIs
+
+LDs $\rightarrow$ Declaracion RLDS
+
+RLDS $\rightarrow$ \underline{NXT} Declaracion RLDS
+
+RLDS $\rightarrow$ $\varepsilon$
+
+Declaracion $\rightarrow$ \underline{NUM} \underline{VAR}
+
+Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
+
+LIs $\rightarrow$ Instruccion RLIS
+
+RLIS $\rightarrow$ \underline{NXT} Instruccion RLDS
+
+RLIS $\rightarrow$ $\varepsilon$
+
+Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
+
+
+	
+EXP0 $\rightarrow$ EXP1 R0
+
+R0 $\rightarrow$ OP0 EXP1 R0
+
+R0 $\rightarrow$ $\varepsilon$
+
+EXP1 $\rightarrow$ EXP2 R1
+
+R1 $\rightarrow$ \underline{AND} EXP2 R1
+
+R1 $\rightarrow$ \underline{OR} EXP2  
+
+R1 $\rightarrow$ $\varepsilon$
+
+EXP2 $\rightarrow$ EXP3 R2 
+
+R2 $\rightarrow$ OP2 EXP3 R2
+
+R2 $\rightarrow$ $\varepsilon$ 
+
+EX3 $\rightarrow$ EXP4 R3
+
+R3 $\rightarrow$ OP3 EXP4 R3
+
+R3 $\rightarrow$ $\varepsilon$
+
+EXP4 $\rightarrow$ \underline{MENOS} EXP4
+
+EXP4 $\rightarrow$ \underline{NOT} EXP5 
+
+EXP4 $\rightarrow$ EXP5
+
+EXP5 $\rightarrow$ \underline{NUMR}
+
+EXP5 $\rightarrow$ \underline{VAR}
+
+EXP5 $\rightarrow$ \underline{TRUE}
+
+EXP5 $\rightarrow$ \underline{FALSE}
+
+EXP5 $\rightarrow$ \underline{PAP} EXP0 \underline{PCIERRE} 
+
+OP0 $\rightarrow$ \underline{MAS}
+
+OP0 $\rightarrow$ \underline{MENOS} 
+
+OP2 $\rightarrow$ \underline{MAY} 
+
+OP2 $\rightarrow$ \underline{MEN} 
+
+OP2 $\rightarrow$ \underline{MAYI} 
+
+OP2 $\rightarrow$ \underline{MENI} 
+
+OP2 $\rightarrow$ \underline{IGUAL} 
+
+OP2 $\rightarrow$ \underline{DIST} 
+
+OP3 $\rightarrow$ \underline{POR} 
+
+OP3 $\rightarrow$ \underline{DIV} 
+
+\subsection{Primeros y siguientes}
+Los \textbf{primeros} de nuestra gramática son:
+
+PRIM(S) = \{NUM, BOOL\}
+
+PRIM(PROGRAMA) = \{NUM, BOOL\}
+
+PRIM(LDS) = \{NUM, BOOL\}
+
+PRIM(RLDS) = \{NXT\}
+
+PRIM(DECLARACION) = \{NUM, BOOL\}
+
+PRIM(LIS) = \{VAR\}
+
+PRIM(RLIS) = \{NXT\}
+
+PRIM(INSTRUCCION) = \{VAR\}
+
+PRIM(R0) = \{MAS,MENOS\}
+
+PRIM(R1) = \{AND,OR\}
+
+PRIM(EXP1) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(EXP2) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(R2) = \{MAY, MEN, MAYI, MENI, IGUAL, DIST\}
+
+PRIM(EXP3) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(R3) = \{POR, DIV, MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(EXP4) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(EXP5) = \{NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(EXP0) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+PRIM(OP0) = \{MAS, MENOS\}
+
+PRIM(OP2) = \{MAY, MEN, MAYI, MENI, IGUAL, DIST\}
+
+PRIM(OP3) = \{POR, DIV\}
+
+Los \textbf{siguientes} son:
+
+SIG(S) = \{EOF\}
+
+SIG(PROGRAMA) = \{EOF\}
+
+SIG(LDS) = \{SEC\}
+
+SIG(RLDS) = \{SEC\}
+
+SIG(DECLARACION) = \{NXT, SEC\}
+
+SIG(LIS) = \{EOF\}
+
+SIG(RLIS) = \{EOF\}
+
+SIG(INSTRUCCION) = \{NXT,EOF\}
+
+SIG(R0) = \{PCI, NXT, EOF\}
+
+SIG(R1) = \{PCI, MAS, MENOS, NXT, EOF\}
+
+SIG(EXP1) = \{PCI, MAS, MENOS, NXT, EOF\}
+
+SIG(EXP2) = \{PCI, AND, OR, MAS, MENOS, NXT, EOF\}
+
+SIG(R2) = \{PCI, AND, OR, MAS, MENOS, NXT, EOF\}
+
+SIG(EXP3) = \{PCI, MAY, MEN, MAYI, MENI, IGUAL, DIST, AND, OR, MAS, MENOS, NXT, EOF\}
+
+SIG(R3) = \{PCI, MAY, MEN, MAYI, MENI, IGUAL, DIST, AND, OR, MAS, MENOS, NXT, EOF\}
+
+SIG(EXP4) = \{PCI, POR, DIV, NOT, NUMR, VAR, TRUE, FALSE, PAP, MAY, MEN, MAYI, MENI, IGUAL, DIST, AND, OR, MAS, MENOS, NXT, EOF\}
+
+SIG(EXP5) = \{PCI, POR, DIV, NOT, NUMR, VAR, TRUE, FALSE, PAP, MAY, MEN, MAYI, MENI, IGUAL, DIST, AND, OR, MAS, MENOS, NXT, EOF\}
+
+SIG(EXP0) = \{PCI, NXT, EOF\}
+
+SIG(OP0) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+SIG(OP2) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+SIG(OP3) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+\subsection{Directores}
+Obtenidos los primeros y los siguientes podemos proceder a calcular los \textbf{directores}:
+
+DIR(S $\rightarrow$ Programa \underline{EOF}) = \{NUM, BOOL\}
+
+DIR(Programa $\rightarrow$ LDs \underline{SEC} LIs \underline{EOF}) = \{NUM, BOOL\}
+
+DIR(LDs $\rightarrow$ Declaracion RLDS) = \{NUM, BOOL\}
+
+DIR(RLDS $\rightarrow$ \underline{NXT} Declaracion RLDS) = \{NXT\}
+
+DIR(RLDS $\rightarrow$ $\varepsilon$) = \{SEC\}
+
+DIR(Declaracion $\rightarrow$ \underline{NUM} \underline{VAR}) = \{NUM\}
+
+DIR(Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}) = \{BOOL\}
+
+DIR(LIs $\rightarrow$ Instruccion RLIS) = \{VAR\}
+
+DIR(RLIS $\rightarrow$ \underline{NXT} Instruccion RLDS) = \{NXT\}
+
+DIR(RLIS $\rightarrow$ $\varepsilon$) = \{EOF\}
+
+DIR(Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0) = \{VAR\}
+	
+DIR(EXP0 $\rightarrow$ EXP1 R0) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+DIR(R0 $\rightarrow$ OP0 EXP1 R0) = \{MAS, MENOS\}
+
+DIR(R0 $\rightarrow$ $\varepsilon$) = \{PCI, NXT, EOF\}
+
+DIR(EXP1 $\rightarrow$ EXP2 R1) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+DIR(R1 $\rightarrow$ \underline{AND} EXP1 R1) = \{AND\} 
+
+DIR(R1 $\rightarrow$ \underline{OR} EXP2) = \{OR\}  
+
+DIR(R1 $\rightarrow$ $\varepsilon$) = \{PCI, MAS, MENOS, NXT, EOF\}
+
+DIR(EXP2 $\rightarrow$ EXP3 R2) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+DIR(R2 $\rightarrow$ OP2 EXP3 R2) = \{MAY, MEN, MAYI, MENI, IGUAL, DIST\} 
+
+DIR(R2 $\rightarrow$ $\varepsilon$) = \{PCI, AND, OR, MAS, MENOS, NXT, EOF\} 
+
+DIR(EX3 $\rightarrow$ EXP4 R3) = \{MENOS, NOT, NUMR, VAR, TRUE, FALSE, PAP\}
+
+DIR(R3 $\rightarrow$ OP3 EXP4 R3) = \{MUL,DIV\}
+
+DIR(R3 $\rightarrow$ $\varepsilon$) = \{PCI, MAY, MEN, MAYI, MENI, IGUAL, DIST, AND, OR, MAS, MENOS, NXT, EOF\}
+
+DIR(EXP4 $\rightarrow$ \underline{MENOS} EXP4) = \{MENOS\}
+
+DIR(EXP4 $\rightarrow$ \underline{NOT} EXP5) = \{NOT\} 
+
+DIR(EXP4 $\rightarrow$ EXP5) = \{NUMR, VAR, TRUE, FALSE, PAP\}
+
+DIR(EXP5 $\rightarrow$ \underline{NUMR}) = \{NUMR\}
+
+DIR(EXP5 $\rightarrow$ \underline{VAR}) = \{VAR\}
+
+DIR(EXP5 $\rightarrow$ \underline{TRUE}) = \{TRUE\}
+
+DIR(EXP5 $\rightarrow$ \underline{FALSE}) = \{FALSE\}
+
+DIR(EXP5 $\rightarrow$ \underline{PAP} EXP0 \underline {PCIERRE}) = \{PAP\} 
+
+DIR(OP0 $\rightarrow$ \underline{MAS}) = \{MAS\}
+
+DIR(OP0 $\rightarrow$ \underline{MENOS}) = \{MENOS\}
+
+DIR(OP2 $\rightarrow$ \underline{MAY}) = \{MAY\} 
+
+DIR(OP2 $\rightarrow$ \underline{MEN}) = \{MEN\} 
+
+DIR(OP2 $\rightarrow$ \underline{MAYI}) = \{MAYI\} 
+
+DIR(OP2 $\rightarrow$ \underline{MENI}) = \{MENI\}
+
+DIR(OP2 $\rightarrow$ \underline{IGUAL}) = \{IGUAL\} 
+
+DIR(OP2 $\rightarrow$ \underline{DIST}) = \{DIST\} 
+
+DIR(OP3 $\rightarrow$ \underline{POR}) = \{POR\} 
+
+DIR(OP3 $\rightarrow$ \underline{DIV}) = \{DIV\}
+
 \end{document}
 
 
+
+ 
