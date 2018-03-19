@@ -7,7 +7,7 @@ package asint;
 public class AnalizadorSintacticoTiny {}
 PARSER_END(AnalizadorSintacticoTiny)
 
-  TOKEN:{<VAR:<LETRA>(<LETRA>|<DIG>|"_")*>}
+  
   TOKEN:{<#LETRA:["a"-"z","A"-"Z"]>}
   TOKEN:{<#DIG:["0"-"9"]>} 
   TOKEN:{<NUM:"num">}
@@ -25,7 +25,8 @@ PARSER_END(AnalizadorSintacticoTiny)
   TOKEN:{<MENOS:"menos">}
   TOKEN:{<DIV:"div">}
   TOKEN:{<POR:"por">}
-  SKIP:{<["\t"," ","\r","\b","\n"]>} 
+  SKIP:{<["\t"," ","\r","\b","\n"]>}
+  TOKEN:{<VAR:<LETRA>(<LETRA>|<DIG>|"_")*>}
   
   void S()   : {} {Programa() <EOF>} 
   void Programa()    : {} {LDs() "&&" LIs()} 
