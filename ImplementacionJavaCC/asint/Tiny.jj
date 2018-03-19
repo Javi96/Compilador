@@ -1,0 +1,51 @@
+options  {
+  STATIC=false;
+}  
+PARSER_BEGIN(AnalizadorSintacticoTiny)
+package asint;
+
+public class AnalizadorSintacticoTiny {}
+PARSER_END(AnalizadorSintacticoTiny)
+
+  TOKEN:{<VAR:<LETRA>(<LETRA>|<DIG>|"_")*>}
+  TOKEN:{<#LETRA:["a"-"z","A"-"Z"]>}
+  TOKEN:{<#DIG:["0"-"9"]>} 
+  TOKEN:{<NUM:"num">}
+  TOKEN:{<BOOL:"bool">}
+  TOKEN:{<TRUE:"true">}
+  TOKEN:{<FALSE:"false">}
+  TOKEN:{<NUMR:(<SIGNO>)? (<DIG> "+" (<DEC>)?(<EX>)?)>}
+  TOKEN:{<#DEC:[","](<DIG>)"+">}
+  TOKEN:{<#EX: "e" | "E" |(<SIGNO>)?<DIG> "+">}
+  TOKEN:{<#SIGNO:["+","-"]>}
+  TOKEN:{<AND:"and">}
+  TOKEN:{<OR:"or">}
+  TOKEN:{<NOT:"not">}
+  TOKEN:{<MAS:"mas">}
+  TOKEN:{<MENOS:"menos">}
+  TOKEN:{<DIV:"div">}
+  TOKEN:{<POR:"por">}
+  SKIP:{<["\t"," ","\r","\b","\n"]>} 
+  
+  void S()   : {} {Programa() <EOF>} 
+  void Programa()    : {} {LDs() "&&" LIs()} 
+  void LDs()   : {} {Declaracion() RLDs()} 
+  void RLDs()  : {} {";" Declaracion() RLDs()  | {}}
+  void Declaracion() : {} {<NUM> | <BOOL>{} }
+  void LIs()    : {} {Instruccion() RLIs()}
+  void RLIs()   : {} {";" Instruccion() RLIs() | {}} 
+  void Instruccion()   : {} {<VAR> "=" Exp0()}
+  void Exp0()  : {} {Exp1() R0()}
+  void R0()   : {} {Op0() Exp1() R0() | {}}
+  void Exp1()  : {} {Exp2() R1()}
+  void R1()   : {} {<AND> Exp1() | <OR> Exp2() | {}} 
+  void Exp2()  : {} {Exp3() R2()}
+  void R2()  : {} {Op2() Exp3() | {}}
+  void Exp3()  : {} {Exp4() R3()}
+  void R3()  : {} {Op3() Exp4() R3() | Exp4()}
+  void Exp4()  : {} {<MENOS> Exp4() | <NOT> Exp5()}
+  void Exp5()  : {} {<NUMR> | <VAR> | "(" Exp0() ")"}
+  void Op0()  : {} {<MAS> | <MENOS>}
+  void Op2()  : {} {">" | "<" | ">=" | "<=" | "==" | "!="}
+  void Op3() : {} {"*" | "/"}
+  
