@@ -11,41 +11,49 @@ public interface AnalizadorSintacticoTinyConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int VAR = 1;
+  int LETRA = 1;
   /** RegularExpression Id. */
-  int LETRA = 2;
+  int DIG = 2;
   /** RegularExpression Id. */
-  int DIG = 3;
+  int NUM = 3;
   /** RegularExpression Id. */
-  int NUM = 4;
+  int BOOL = 4;
   /** RegularExpression Id. */
-  int BOOL = 5;
+  int TRUE = 5;
   /** RegularExpression Id. */
-  int TRUE = 6;
+  int FALSE = 6;
   /** RegularExpression Id. */
-  int FALSE = 7;
+  int DEC = 7;
   /** RegularExpression Id. */
-  int NUMR = 8;
+  int EX = 8;
   /** RegularExpression Id. */
-  int DEC = 9;
+  int SIGNO = 9;
   /** RegularExpression Id. */
-  int EX = 10;
+  int AND = 10;
   /** RegularExpression Id. */
-  int SIGNO = 11;
+  int OR = 11;
   /** RegularExpression Id. */
-  int AND = 12;
+  int NOT = 12;
   /** RegularExpression Id. */
-  int OR = 13;
+  int MAS = 13;
   /** RegularExpression Id. */
-  int NOT = 14;
+  int MENOS = 14;
   /** RegularExpression Id. */
-  int MAS = 15;
+  int DIV = 15;
   /** RegularExpression Id. */
-  int MENOS = 16;
+  int POR = 16;
   /** RegularExpression Id. */
-  int DIV = 17;
+  int VAR = 18;
   /** RegularExpression Id. */
-  int POR = 18;
+  int PDEC = 19;
+  /** RegularExpression Id. */
+  int PEXP = 20;
+  /** RegularExpression Id. */
+  int LENT = 21;
+  /** RegularExpression Id. */
+  int LDEC = 22;
+  /** RegularExpression Id. */
+  int LEXP = 23;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -53,14 +61,12 @@ public interface AnalizadorSintacticoTinyConstants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
-    "<VAR>",
     "<LETRA>",
     "<DIG>",
     "\"num\"",
     "\"bool\"",
     "\"true\"",
     "\"false\"",
-    "<NUMR>",
     "<DEC>",
     "<EX>",
     "<SIGNO>",
@@ -71,7 +77,13 @@ public interface AnalizadorSintacticoTinyConstants {
     "\"menos\"",
     "\"div\"",
     "\"por\"",
-    "<token of kind 19>",
+    "<token of kind 17>",
+    "<VAR>",
+    "<PDEC>",
+    "<PEXP>",
+    "<LENT>",
+    "<LDEC>",
+    "<LEXP>",
     "\"&&\"",
     "\";\"",
     "\"=\"",
