@@ -1,0 +1,9 @@
+num peso;
+num peso2;
+num peso_max;
+bool pesado
+&&
+peso = (45.0 * 12e-56) / -002.00;
+pesado = (peso > 10.00) or (peso / 002 <= +04);
+peso_max = peso2 != peso
+<EOF>

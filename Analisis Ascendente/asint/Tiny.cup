@@ -19,22 +19,22 @@ init with {:
 :};
 
 
-terminal     SEC, NXT, _NUM, _BOOL, VAR, ASIG, _AND, _OR, NOT, NUMR, _TRUE, _FALSE, PAP, PCIERRE, MAS, MENOS, MAY, MEN, MAYI, MENI, IGUAL, DIST, POR, DIV;
+terminal     SEC, NXT, NUM, BOOL, VAR, ASIG, AND, OR, NOT, NUMR, TRUE, FALSE, PAP, PCIERRE, MAS, MENOS, MAY, MEN, MAYI, MENI, IGUAL, DIST, POR, DIV;
 
 non terminal  S, Programa, LDs, Declaracion, LIs, Instruccion, EXP0, EXP1, EXP2, EXP3, EXP4, EXP5, OP0, OP2, OP3;
 
 S ::= Programa ;
 Programa ::= LDs SEC LIs ;
 LDs ::= LDs NXT Declaracion | Declaracion ;
-Declaracion ::= _NUM VAR | _BOOL VAR ;
+Declaracion ::= NUM VAR | BOOL VAR ;
 LIs ::= LIs NXT Instruccion | Instruccion ;
 Instruccion ::= VAR ASIG EXP0 ;
 EXP0 ::= EXP0 OP0 EXP1 | EXP1 ;
-EXP1 ::= EXP2 _AND EXP1 | EXP2 _OR EXP2 | EXP2 ;
+EXP1 ::= EXP2 AND EXP1 | EXP2 OR EXP2 | EXP2 ;
 EXP2 ::= EXP3 OP2 EXP3 | EXP3 ;
 EXP3 ::= EXP3 OP3 EXP4 | EXP4 ;
 EXP4 ::= MENOS EXP4 | NOT EXP5 ;
-EXP5 ::= _NUM | VAR | _TRUE | _FALSE | PAP EXP0 PCIERRE ;
+EXP5 ::= NUMR | VAR | TRUE | FALSE | PAP EXP0 PCIERRE ;
 OP0 ::= MAS | MENOS ;
 OP2 ::= MAY | MEN | MAYI | MENI | IGUAL | DIST ;
 OP3 ::= POR | DIV ;
