@@ -1,4 +1,4 @@
-\select@language {spanish}
+\babel@toc {spanish}{}
 \contentsline {chapter}{\numberline {1}Fase 1: Analizador léxico}{2}
 \contentsline {section}{\numberline {1.1}Clases Léxicas}{2}
 \contentsline {section}{\numberline {1.2}Especificación Formal}{3}
@@ -10,3 +10,4 @@
 \contentsline {subsection}{\numberline {2.1.3}Gramática transformada LL(1)}{7}
 \contentsline {subsection}{\numberline {2.1.4}Primeros y siguientes}{9}
 \contentsline {subsection}{\numberline {2.1.5}Directores}{10}
+\contentsline {chapter}{\numberline {3}Fase 3: Analizador sintáctico ascendente}{12}

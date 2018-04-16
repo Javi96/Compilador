@@ -43,7 +43,7 @@ Las clases léxicas que hemos considerado para representar los tokens del lenguaj
 	\item \textbf{NXT:} Representa el signo "`;"' que marca el comienzo de la siguiente instrucción.
 	\item \textbf{TRUE:} Palabra reservada "`true"'.
 	\item \textbf{FALSE:} Palabra reservada "`false"'.
-	\item \textbf{NUMR:} Representa un n?mero real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
+	\item \textbf{NUMR:} Representa un número real. Puede empezar opcionalmente con un signo seguido de una secuencia de uno o más digitos cualesquiera, pudiendo poner ceros no significativos a la izquierda. Puede opcionalmente estar seguido por una parte decimal y/o una parte exponencial.
 	\item \textbf{MAS:} Operador suma (\textbackslash +).
 	\item \textbf{MENOS:} Operador resta (\textbackslash -).
 	\item \textbf{POR:} Operador multiplicación (\textbackslash *).
@@ -251,7 +251,7 @@ LIs $\rightarrow$ Instruccion
 
 Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
 
-
+\
 
 EXP0 $\rightarrow$ EXP0 OP0 EXP1
 
@@ -267,7 +267,7 @@ EXP2 $\rightarrow$ EXP3 OP2 EXP3
 
 EXP2 $\rightarrow$ EXP3 
 
-EXP3 $\rightarrow$ EXP3 OP2 EXP4 
+EXP3 $\rightarrow$ EXP3 OP3 EXP4 
 
 EXP3 $\rightarrow$ EXP4 
 
@@ -324,13 +324,13 @@ Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
 
 LIs $\rightarrow$ Instruccion RLIS
 
-RLIS $\rightarrow$ \underline{NXT} Instruccion RLDS
+RLIS $\rightarrow$ \underline{NXT} Instruccion RLIS
 
 RLIS $\rightarrow$ $\varepsilon$
 
 Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
 
-
+\
 	
 EXP0 $\rightarrow$ EXP1 R0
 
@@ -340,7 +340,7 @@ R0 $\rightarrow$ $\varepsilon$
 
 EXP1 $\rightarrow$ EXP2 R1
 
-R1 $\rightarrow$ \underline{AND} EXP2 R1
+R1 $\rightarrow$ \underline{AND} EXP1
 
 R1 $\rightarrow$ \underline{OR} EXP2  
 
@@ -441,7 +441,7 @@ PRIM(OP3) = \{POR, DIV\}
 
 Los \textbf{siguientes} son:
 
-SIG(S) = \{EOF\}
+SIG(S) = \{$\varepsilon$\}
 
 SIG(PROGRAMA) = \{EOF\}
 
@@ -569,6 +569,12 @@ DIR(OP2 $\rightarrow$ \underline{DIST}) = \{DIST\}
 DIR(OP3 $\rightarrow$ \underline{POR}) = \{POR\} 
 
 DIR(OP3 $\rightarrow$ \underline{DIV}) = \{DIV\}
+
+%---------------------------------------------------------------------
+%                   Capítulo 3 - Analizador sintáctico ascendente
+%---------------------------------------------------------------------
+\chapter{Fase 3: Analizador sintáctico ascendente}
+En esta fase desarrollaremos una versión diferente del analizador sintáctico, esta vez ascendente LR. Se implementará con JLex y Cup haciendo uso de la gramática incontextual desarrollada en la fase 2.
 
 \end{document}
 
