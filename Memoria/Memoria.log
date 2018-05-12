@@ -1,5 +1,4 @@
-
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  16 APR 2018 16:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  12 MAY 2018 09:43
 entering extended mode
 **./Memoria.tex
 (Memoria.tex
@@ -665,18 +664,35 @@ LaTeX Info: Redefining \% on input line 576.
 Cap\'{\i }tulo 3.
 [12
 
-] (Memoria.aux
+]
+Cap\'{\i }tulo 4.
+
+Overfull \hbox (9.24756pt too wide) in paragraph at lines 605--632
+ [][] 
+ []
+
+[13
+
+]
+LaTeX Info: Redefining \. on input line 636.
+LaTeX Info: Redefining \% on input line 636.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 14
+ []
+
+[14] (Memoria.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 14659 strings out of 493305
- 291664 string characters out of 3138851
- 373153 words of memory out of 3000000
- 17910 multiletter control sequences out of 15000+200000
+ 14661 strings out of 493305
+ 291719 string characters out of 3138851
+ 373175 words of memory out of 3000000
+ 17912 multiletter control sequences out of 15000+200000
  55384 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,10n,68p,461b,809s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,11n,68p,515b,809s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.e
 nc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.e
 nc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx
@@ -684,11 +700,9 @@ nc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Fil
 lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
 m/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmro10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/lm/lmsy10.pfb>
-Output written on Memoria.pdf (13 pages, 209531 bytes).
+Output written on Memoria.pdf (15 pages, 216433 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
+ 92 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
-
-
 

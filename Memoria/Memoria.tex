@@ -576,7 +576,65 @@ DIR(OP3 $\rightarrow$ \underline{DIV}) = \{DIV\}
 \chapter{Fase 3: Analizador sintáctico ascendente}
 En esta fase desarrollaremos una versión diferente del analizador sintáctico, esta vez ascendente LR. Se implementará con JLex y Cup haciendo uso de la gramática incontextual desarrollada en la fase 2.
 
+
+%---------------------------------------------------------------------
+%                   Capítulo 4 - Construcción de árboles de sintaxis abstracta
+%---------------------------------------------------------------------
+\chapter{Fase 4: Construcción de árboles de sintaxis abstracta}
+
+En esta fase desarrollaremos los constructores ascendentes y descendentes del árbol de sintaxis abstracta de la práctica.
+%---------------------------------------------------------------------
+\section{Funciones constructoras}
+%---------------------------------------------------------------------
+\label{cap4:sec:funciones_constructoras}
+
+Lo primero que debemos hacer es simplificar la gramática incontextual desarrollada en la fase 2, eliminando las estructuras introducidas con el propósito de evitar ambigüedades. Esta es la gramática resultante de la simplificación:
+
+Programa $\rightarrow$ LDs \underline{SEC} LIs
+
+LDs $\rightarrow$ LDs \underline{NXT} \underline{NUM} \underline{VAR} | LDs \underline{NXT} \underline{BOOL} \underline{VAR} | \underline{NUM} \underline{VAR} | \underline{BOOL} \underline{VAR}
+
+LIs $\rightarrow$ LIs \underline{NXT} \underline{VAR} \underline{ASIG} EXP
+
+EXP $\rightarrow$ EXP \underline{MAS} EXP | EXP \underline{MENOS} EXP | EXP \underline{AND} EXP | EXP \underline{OR} EXP | EXP \underline{MAY} EXP | EXP \underline{MEN} EXP | EXP \underline{MAYI} EXP | EXP \underline{MENI} EXP | EXP \underline{IGUAL} EXP | EXP \underline{DIST} EXP | EXP \underline{POR} EXP | EXP \underline{DIV} EXP | \underline{MENOS} EXP | \underline{NOT} EXP |  \underline{NUMR} | \underline{VAR} | \underline{TRUE} | \underline{FALSE}| \underline{PAP} EXP \underline{PCIERRE} 
+
+Una vez tenemos esta nueva gramática podemos obtener los constructores. Cada producción semánticamente significativa representa una función constructora. En la tabla \ref{tabla:constructoras} podemos ver la lista de constructores obtenidos.
+
+\begin{table}[htbp]
+	\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			Regla & Constructora \\
+			\hline 
+			Programa $\rightarrow$ LDs \underline{SEC} LIs & \textbf{programa}: LDs X LIs $\rightarrow$ Programa \\ \hline
+			LDs $\rightarrow$ LDs \underline{NXT} \underline{NUM} \underline{VAR} & \textbf{dnCompuesta}: LDs X String $\rightarrow$ LDs \\ \hline
+			LDs $\rightarrow$ LDs \underline{NXT} \underline{BOOL} \underline{VAR} & \textbf{dbCompuesta}: LDs X String $\rightarrow$ LDs \\ \hline
+			LDs $\rightarrow$ \underline{NUM} \underline{VAR} & \textbf{dnSimple}: String $\rightarrow$ LDs \\ \hline
+			LDs $\rightarrow$ \underline{BOOL} \underline{VAR} & \textbf{dbSimple}: String $\rightarrow$ LDs \\ \hline
+			LIs $\rightarrow$ LIs \underline{NXT} \underline{VAR} \underline{ASIG} EXP & \textbf{lis}: LIs X String X EXP $\rightarrow$ LIs \\ \hline
+			EXP $\rightarrow$ EXP \underline{MAS} EXP & \textbf{suma}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{MENOS} EXP & \textbf{resta}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{AND} EXP & \textbf{conj}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{OR} EXP & \textbf{disy}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{MAY} EXP & \textbf{mayor}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{MEN} EXP & \textbf{menor}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{MAYI} EXP & \textbf{mayori}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{MENI} EXP & \textbf{menori}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{IGUAL} EXP & \textbf{igual}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{DIST} EXP & \textbf{distinto}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{POR} EXP & \textbf{mul}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ EXP \underline{DIV} EXP & \textbf{div}: EXP X EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ \underline{MENOS} EXP & \textbf{signo}: EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ \underline{NOT} EXP & \textbf{neg}: EXP $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ \underline{NUMR} & \textbf{real}: String $\rightarrow$ EXP \\ \hline
+			EXP $\rightarrow$ \underline{VAR} & \textbf{id}: String $\rightarrow$ EXP \\ \hline			
+		\end{tabular}
+		\caption{Constructoras}
+		\label{tabla:constructoras}
+\end{table} 
+
 \end{document}
+
 
 
 
