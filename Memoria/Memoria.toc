@@ -13,3 +13,5 @@
 \contentsline {chapter}{\numberline {3}Fase 3: Analizador sintáctico ascendente}{12}
 \contentsline {chapter}{\numberline {4}Fase 4: Construcción de árboles de sintaxis abstracta}{13}
 \contentsline {section}{\numberline {4.1}Funciones constructoras}{13}
+\contentsline {section}{\numberline {4.2}Diagrama de clases}{15}
+\contentsline {section}{\numberline {4.3}Constructor de árboles de sintaxis abstracta}{15}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  12 MAY 2018 09:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  13 MAY 2018 11:05
 entering extended mode
 **./Memoria.tex
 (Memoria.tex
@@ -658,8 +658,8 @@ LaTeX Info: Redefining \% on input line 468.
 LaTeX Info: Redefining \. on input line 525.
 LaTeX Info: Redefining \% on input line 525.
  [10]
-LaTeX Info: Redefining \. on input line 576.
-LaTeX Info: Redefining \% on input line 576.
+LaTeX Info: Redefining \. on input line 578.
+LaTeX Info: Redefining \% on input line 578.
  [11]
 Cap\'{\i }tulo 3.
 [12
@@ -667,42 +667,82 @@ Cap\'{\i }tulo 3.
 ]
 Cap\'{\i }tulo 4.
 
-Overfull \hbox (9.24756pt too wide) in paragraph at lines 605--632
+Overfull \hbox (32.05923pt too wide) in paragraph at lines 607--635
  [][] 
  []
 
 [13
 
 ]
-LaTeX Info: Redefining \. on input line 636.
-LaTeX Info: Redefining \% on input line 636.
+LaTeX Info: Redefining \. on input line 647.
+LaTeX Info: Redefining \% on input line 647.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 14
  []
 
-[14] (Memoria.aux
+[14]
+LaTeX Info: Redefining \. on input line 717.
+LaTeX Info: Redefining \% on input line 717.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 15
+ []
+
+[15]
+LaTeX Info: Redefining \. on input line 797.
+LaTeX Info: Redefining \% on input line 797.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 16
+ []
+
+[16]
+LaTeX Info: Redefining \. on input line 875.
+LaTeX Info: Redefining \% on input line 875.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 17
+ []
+
+[17]
+LaTeX Info: Redefining \. on input line 955.
+LaTeX Info: Redefining \% on input line 955.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 18
+ []
+
+[18]
+LaTeX Info: Redefining \. on input line 1004.
+LaTeX Info: Redefining \% on input line 1004.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 19
+ []
+
+[19] (Memoria.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 14661 strings out of 493305
- 291719 string characters out of 3138851
- 373175 words of memory out of 3000000
- 17912 multiletter control sequences out of 15000+200000
- 55384 words of font info for 41 fonts, out of 3000000 for 9000
+ 14673 strings out of 493305
+ 291902 string characters out of 3138851
+ 373197 words of memory out of 3000000
+ 17923 multiletter control sequences out of 15000+200000
+ 58376 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,11n,68p,515b,809s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.e
-nc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.e
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.e
+nc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.e
 nc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/
 lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
-m/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmro10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmsy10.pfb>
-Output written on Memoria.pdf (15 pages, 216433 bytes).
+m/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+lm/lmro10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
+Output written on Memoria.pdf (20 pages, 240523 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
+ 112 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

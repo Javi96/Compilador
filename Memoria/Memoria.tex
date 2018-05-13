@@ -273,7 +273,9 @@ EXP3 $\rightarrow$ EXP4
 
 EXP4 $\rightarrow$ \underline{MENOS} EXP4
 
-EXP4 $\rightarrow$ \underline{NOT} EXP5 
+EXP4 $\rightarrow$ \underline{NOT} EXP5
+
+EXP4 $\rightarrow$ EXP5 
 
 EXP5 $\rightarrow$ \underline{NUMR}
 
@@ -594,7 +596,7 @@ Programa $\rightarrow$ LDs \underline{SEC} LIs
 
 LDs $\rightarrow$ LDs \underline{NXT} \underline{NUM} \underline{VAR} | LDs \underline{NXT} \underline{BOOL} \underline{VAR} | \underline{NUM} \underline{VAR} | \underline{BOOL} \underline{VAR}
 
-LIs $\rightarrow$ LIs \underline{NXT} \underline{VAR} \underline{ASIG} EXP
+LIs $\rightarrow$ LIs \underline{NXT} \underline{VAR} \underline{ASIG} EXP | \underline{VAR} \underline{ASIG} EXP
 
 EXP $\rightarrow$ EXP \underline{MAS} EXP | EXP \underline{MENOS} EXP | EXP \underline{AND} EXP | EXP \underline{OR} EXP | EXP \underline{MAY} EXP | EXP \underline{MEN} EXP | EXP \underline{MAYI} EXP | EXP \underline{MENI} EXP | EXP \underline{IGUAL} EXP | EXP \underline{DIST} EXP | EXP \underline{POR} EXP | EXP \underline{DIV} EXP | \underline{MENOS} EXP | \underline{NOT} EXP |  \underline{NUMR} | \underline{VAR} | \underline{TRUE} | \underline{FALSE}| \underline{PAP} EXP \underline{PCIERRE} 
 
@@ -611,7 +613,8 @@ Una vez tenemos esta nueva gramática podemos obtener los constructores. Cada pro
 			LDs $\rightarrow$ LDs \underline{NXT} \underline{BOOL} \underline{VAR} & \textbf{dbCompuesta}: LDs X String $\rightarrow$ LDs \\ \hline
 			LDs $\rightarrow$ \underline{NUM} \underline{VAR} & \textbf{dnSimple}: String $\rightarrow$ LDs \\ \hline
 			LDs $\rightarrow$ \underline{BOOL} \underline{VAR} & \textbf{dbSimple}: String $\rightarrow$ LDs \\ \hline
-			LIs $\rightarrow$ LIs \underline{NXT} \underline{VAR} \underline{ASIG} EXP & \textbf{lis}: LIs X String X EXP $\rightarrow$ LIs \\ \hline
+			LIs $\rightarrow$ LIs \underline{NXT} \underline{VAR} \underline{ASIG} EXP & \textbf{liCompuesta}: LIs X String X EXP $\rightarrow$ LIs \\ \hline
+			LIs $\rightarrow$ \underline{VAR} \underline{ASIG} EXP & \textbf{liSimple}: String X EXP $\rightarrow$ LIs \\ \hline
 			EXP $\rightarrow$ EXP \underline{MAS} EXP & \textbf{suma}: EXP X EXP $\rightarrow$ EXP \\ \hline
 			EXP $\rightarrow$ EXP \underline{MENOS} EXP & \textbf{resta}: EXP X EXP $\rightarrow$ EXP \\ \hline
 			EXP $\rightarrow$ EXP \underline{AND} EXP & \textbf{conj}: EXP X EXP $\rightarrow$ EXP \\ \hline
@@ -632,6 +635,371 @@ Una vez tenemos esta nueva gramática podemos obtener los constructores. Cada pro
 		\caption{Constructoras}
 		\label{tabla:constructoras}
 \end{table} 
+
+%---------------------------------------------------------------------
+\section{Diagrama de clases}
+%---------------------------------------------------------------------
+\label{cap4:sec:diagrama_clases}
+
+A continuación se muestra el diagrama de clases que nos ayudará a diseñar la sintaxis abstracta del lenguaje.
+
+%---------------------------------------------------------------------
+\section{Constructor de árboles de sintaxis abstracta}
+%---------------------------------------------------------------------
+\label{cap4:sec:arboles}
+
+S $\rightarrow$ Programa \underline{EOF}
+
+\tab S.a = Programa.a
+
+Programa $\rightarrow$ LDs \underline{SEC} LIs
+
+\tab Programa.a = programa(LDs.a, LIs.a)
+
+LDs $\rightarrow$ LDs \underline{NXT} Declaracion
+
+\tab LDs\_{0}.a = dCompuesta(LDs.a, Declaracion.a)
+
+LDs $\rightarrow$ Declaracion
+
+\tab LDs.a = Declaracion.a
+
+Declaracion $\rightarrow$ \underline{NUM} \underline{VAR}
+
+\tab Declaracion.a = dnSimple(VAR.lex)
+
+Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
+
+\tab Declaracion.a = dbSimple(VAR.lex)
+
+LIs $\rightarrow$ LIs \underline{NXT} Instruccion
+
+\tab LIs\_{0}.a = liCompuesta(LDs.a, Instruccion.id, Instruccion.exp)
+
+LIs $\rightarrow$ Instruccion
+
+\tab LIs.a = liSimple(Instruccion.id, Instruccion.exp)
+
+Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
+
+\tab Intruccion.id = VAR.lex
+
+\tab Instruccion.exp = EXP0.a
+
+\
+
+EXP0 $\rightarrow$ EXP0 OP0 EXP1
+
+\tab EXP0\_{0}.a = mkexpbin(OP0.op, EXP0.a, EXP1.a)
+
+EXP0 $\rightarrow$ EXP1 
+
+\tab EXP0.a = EXP1.a
+
+EXP1 $\rightarrow$ EXP2 \underline{AND} EXP1 
+
+\tab EXP1\_{0}.a = mkexpbin("`and"', EXP2.a, EXP1.a)
+
+EXP1 $\rightarrow$ EXP2 \underline{OR} EXP2  
+
+\tab EXP1.a = mkexpbin("`or"', EXP2\_{0}.a, EXP2.a)
+
+EXP1 $\rightarrow$ EXP2
+
+\tab EXP1.a = EXP2.a
+
+EXP2 $\rightarrow$ EXP3 OP2 EXP3 
+
+\tab EXP2.a = mkexpbin(OP2.op, EXP3\_{0}.a, EXP3.a)
+
+EXP2 $\rightarrow$ EXP3 
+
+\tab EXP2.a = EXP3.a
+
+EXP3 $\rightarrow$ EXP3 OP3 EXP4 
+
+\tab EXP3\_{0}.a = mkexpbin(OP3.op, EXP3.a, EXP4.a)
+
+EXP3 $\rightarrow$ EXP4 
+
+\tab EXP3.a = EXP4.a
+
+EXP4 $\rightarrow$ \underline{MENOS} EXP4
+
+\tab EXP4\_{0}.a = mkexpun("`-"', EXP4.a)
+
+EXP4 $\rightarrow$ \underline{NOT} EXP5 
+
+\tab EXP4.a = mkexpun("`!"', EXP5.a)
+
+EXP4 $\rightarrow$ EXP5 
+
+\tab EXP4.a = EXP5.a
+
+EXP5 $\rightarrow$ \underline{NUMR}
+
+\tab EXP5.a = real(NUMR.lex)
+
+EXP5 $\rightarrow$ \underline{VAR}
+
+\tab EXP5.a = id(VAR.lex)
+
+EXP5 $\rightarrow$ \underline{TRUE}
+
+\tab EXP5.a = "`true"'
+
+EXP5 $\rightarrow$ \underline{FALSE}
+
+\tab EXP5.a = "`false"'
+
+EXP5 $\rightarrow$ \underline{PAP} EXP0 \underline{PCIERRE} 
+
+\tab EXP5.a = EXP0.a
+
+OP0 $\rightarrow$ \underline{MAS}
+
+\tab OP0.op = "`+"'
+
+OP0 $\rightarrow$ \underline{MENOS} 
+
+\tab OP0.op = "`-"'
+
+OP2 $\rightarrow$ \underline{MAY} 
+
+\tab OP2.op = "`>"'
+
+OP2 $\rightarrow$ \underline{MEN} 
+
+\tab OP2.op = "`<"'
+
+OP2 $\rightarrow$ \underline{MAYI} 
+
+\tab OP2.op = "`>="'
+
+OP2 $\rightarrow$ \underline{MENI} 
+
+\tab OP2.op = "`<="'
+
+OP2 $\rightarrow$ \underline{IGUAL} 
+
+\tab OP2.op = "`=="'
+
+OP2 $\rightarrow$ \underline{DIST} 
+
+\tab OP2.op = "`!="'
+
+OP3 $\rightarrow$ \underline{POR} 
+
+\tab OP3.op = "`/"'
+
+OP3 $\rightarrow$ \underline{DIV}
+
+\tab OP3.op = "`/"'
+
+Para poder hacer una implementación descendente es necesario acondicionar la gramática:
+
+S $\rightarrow$ Programa \underline{EOF}
+
+\tab S.a = Programa.a
+
+Programa $\rightarrow$ LDs \underline{SEC} LIs
+
+\tab Programa.a = programa(LDs.a, LIs.a)
+
+LDs $\rightarrow$ Declaracion RLDS
+
+\tab RLDS.ah = dSimple(Declaracion.a)
+
+\tab LDs.a = RLDS.a
+
+RLDS $\rightarrow$ \underline{NXT} Declaracion RLDS
+
+\tab RLDS\_{1}.a = dCompuesta(RLDS\_{0}.ah, Declaracion.a)
+
+\tab RLDS\_{0}.a = RLDS\_{1}.a
+
+RLDS $\rightarrow$ $\varepsilon$
+
+\tab RLDS.a = RLDS.ah
+
+Declaracion $\rightarrow$ \underline{NUM} \underline{VAR}
+
+Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
+
+LIs $\rightarrow$ Instruccion RLIS
+
+\tab RLIS.ah = liSimple(Instruccion.id, Instruccion.exp)
+
+\tab LIs.a = RLIS.a
+
+RLIS $\rightarrow$ \underline{NXT} Instruccion RLIS
+
+\tab RLIS\_{1}.a = liCompuesta(RLIS\_{0}.ah, Instruccion.a)
+
+\tab RLIS\_{0}.a = RLIS\_{1}.a
+
+RLIS $\rightarrow$ $\varepsilon$
+
+\tab RLIs.a = RLIs.ah
+
+Declaracion $\rightarrow$ \underline{NUM} \underline{VAR}
+
+\tab Declaracion.a = dnSimple(VAR.lex)
+
+Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
+
+\tab Declaracion.a = dbSimple(VAR.lex)
+
+Instruccion $\rightarrow$ \underline{VAR} \underline{ASIG} EXP0
+
+\tab Intruccion.id = VAR.lex
+
+\tab Instruccion.exp = EXP0.a
+
+\
+
+EXP0 $\rightarrow$ EXP1 R0
+
+\tab R0.ah = EXP1.a
+
+\tab EXP0.a = R0.a
+
+R0 $\rightarrow$ OP0 EXP1 R0
+
+\tab R0\_{1}.ah = mkexpbin(OP0.op, R0\_{0}.ah, EXP1.a)
+
+\tab R0\_{0}.a = R0\_{1}.a
+
+R0 $\rightarrow$ $\varepsilon$
+
+\tab R0.a = R0.ah
+
+EXP1 $\rightarrow$ EXP2 R1
+
+\tab R1.ah = EXP2.a
+
+\tab EXP1.a = R1.a
+
+R1 $\rightarrow$ \underline{AND} EXP1
+
+\tab R1\_{1}.ah = mkexpbin("and", R1\_{1}.ah, EXP1.a)
+
+\tab R1\_{0}.a = R1\_{1}.a
+
+R1 $\rightarrow$ \underline{OR} EXP2
+
+\tab R1\_{1}.ah = mkexpbin("or", R1\_{0}.ah, EXP2.a)
+
+\tab R1\_{0}.a = R1\_{1}.a  
+
+R1 $\rightarrow$ $\varepsilon$
+
+\tab R1.a = R1.ah
+
+EXP2 $\rightarrow$ EXP3 R2
+
+\tab R2.ah = EXP3.a
+
+\tab EXP2.a = R2.a
+
+R2 $\rightarrow$ OP2 EXP3 R2
+
+\tab R2\_{1}.ah = mkexpbin(OP2.op, R2\_{0}.ah, EXP3.a)
+
+\tab R2\_{0}.a = R2\_{1}.a
+
+R2 $\rightarrow$ $\varepsilon$ 
+
+\tab R2.a = R2.ah
+
+EX3 $\rightarrow$ EXP4 R3
+
+\tab R3.ah = EXP4.a
+
+\tab EXP3.a = R3.a
+
+R3 $\rightarrow$ OP3 EXP4 R3
+
+\tab R3\_{1}.ah = mkexpbin(OP3.op, R3\_{0}.ah, EXP4.a)
+
+\tab R3\_{0}.a = R3\_{1}.a
+
+R3 $\rightarrow$ $\varepsilon$
+
+\tab R3.a = R3.ah
+
+EXP4 $\rightarrow$ \underline{MENOS} EXP4
+
+\tab EXP4\_{0}.a = mkexpun("-", EXP4.a)
+
+EXP4 $\rightarrow$ \underline{NOT} EXP5 
+
+\tab EXP4.a = mkexpun("!", EXP5.a)
+
+EXP4 $\rightarrow$ EXP5 
+
+\tab EXP4.a = EXP5.a
+
+EXP5 $\rightarrow$ \underline{NUMR}
+
+\tab EXP5.a = real(NUMR.lex)
+
+EXP5 $\rightarrow$ \underline{VAR}
+
+\tab EXP5.a = id(VAR.lex)
+
+EXP5 $\rightarrow$ \underline{TRUE}
+
+\tab EXP5.a = "true"
+
+EXP5 $\rightarrow$ \underline{FALSE}
+
+\tab EXP5.a = "false"
+
+EXP5 $\rightarrow$ \underline{PAP} EXP0 \underline{PCIERRE} 
+
+\tab EXP5.a = EXP0.a
+
+OP0 $\rightarrow$ \underline{MAS}
+
+\tab OP0.op = "`+"'
+
+OP0 $\rightarrow$ \underline{MENOS} 
+
+\tab OP0.op = "`-"'
+
+OP2 $\rightarrow$ \underline{MAY} 
+
+\tab OP2.op = "`>"'
+
+OP2 $\rightarrow$ \underline{MEN} 
+
+\tab OP2.op = "`<"'
+
+OP2 $\rightarrow$ \underline{MAYI} 
+
+\tab OP2.op = "`>="'
+
+OP2 $\rightarrow$ \underline{MENI} 
+
+\tab OP2.op = "`<="'
+
+OP2 $\rightarrow$ \underline{IGUAL} 
+
+\tab OP2.op = "`=="'
+
+OP2 $\rightarrow$ \underline{DIST} 
+
+\tab OP2.op = "`!="'
+
+OP3 $\rightarrow$ \underline{POR} 
+
+\tab OP3.op = "`/"'
+
+OP3 $\rightarrow$ \underline{DIV}
+
+\tab OP3.op = "`/"'
+
 
 \end{document}
 
