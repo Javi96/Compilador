@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  13 MAY 2018 11:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  23 MAY 2018 13:49
 entering extended mode
 **./Memoria.tex
 (Memoria.tex
@@ -667,82 +667,100 @@ Cap\'{\i }tulo 3.
 ]
 Cap\'{\i }tulo 4.
 
-Overfull \hbox (32.05923pt too wide) in paragraph at lines 607--635
+Overfull \hbox (46.99442pt too wide) in paragraph at lines 607--637
  [][] 
  []
 
+<diagrama.png, id=55, 379.4175pt x 316.18124pt>
+File: diagrama.png Graphic file (type png)
+<use diagrama.png>
+Package pdftex.def Info: diagrama.png  used on input line 649.
+(pdftex.def)             Requested size: 360.0pt x 300.0038pt.
 [13
 
 ]
-LaTeX Info: Redefining \. on input line 647.
-LaTeX Info: Redefining \% on input line 647.
+LaTeX Info: Redefining \. on input line 652.
+LaTeX Info: Redefining \% on input line 652.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 14
  []
 
 [14]
-LaTeX Info: Redefining \. on input line 717.
-LaTeX Info: Redefining \% on input line 717.
+LaTeX Info: Redefining \. on input line 676.
+LaTeX Info: Redefining \% on input line 676.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 15
  []
 
-[15]
-LaTeX Info: Redefining \. on input line 797.
-LaTeX Info: Redefining \% on input line 797.
+[15 <./diagrama.png>]
+LaTeX Info: Redefining \. on input line 758.
+LaTeX Info: Redefining \% on input line 758.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 16
  []
 
 [16]
-LaTeX Info: Redefining \. on input line 875.
-LaTeX Info: Redefining \% on input line 875.
+LaTeX Info: Redefining \. on input line 836.
+LaTeX Info: Redefining \% on input line 836.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 17
  []
 
 [17]
-LaTeX Info: Redefining \. on input line 955.
-LaTeX Info: Redefining \% on input line 955.
+Overfull \hbox (11.99446pt too wide) in paragraph at lines 871--872
+[]| $\OML/lmm/m/it/10.95 RLDS[]$\T1/lmr/m/n/10.95 .a = dCompuesta($\OML/lmm/m/it/10.95 RLDS[]$\T1/lmr/m/n/10.95 .ah, De-
+cla-ra-cion.tipo, De-cla-ra-cion.id) 
+ []
+
+LaTeX Info: Redefining \. on input line 915.
+LaTeX Info: Redefining \% on input line 915.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 18
  []
 
 [18]
-LaTeX Info: Redefining \. on input line 1004.
-LaTeX Info: Redefining \% on input line 1004.
+LaTeX Info: Redefining \. on input line 995.
+LaTeX Info: Redefining \% on input line 995.
 
 Overfull \hbox (75.41426pt too wide) has occurred while \output is active
 \T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 19
  []
 
-[19] (Memoria.aux
+[19]
+LaTeX Info: Redefining \. on input line 1058.
+LaTeX Info: Redefining \% on input line 1058.
+
+Overfull \hbox (75.41426pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/10.95 CAPÍTULO 4.  FASE 4: CONSTRUCCIÓN DE ÁRBOLES DE SINTAXIS ABSTRACTA \T1/lmr/m/n/10.95 20
+ []
+
+[20] (Memoria.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
  14673 strings out of 493305
- 291902 string characters out of 3138851
- 373197 words of memory out of 3000000
- 17923 multiletter control sequences out of 15000+200000
- 58376 words of font info for 42 fonts, out of 3000000 for 9000
+ 291905 string characters out of 3138851
+ 373208 words of memory out of 3000000
+ 17922 multiletter control sequences out of 15000+200000
+ 55384 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,11n,68p,515b,809s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.e
-nc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.e
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.e
+nc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.e
 nc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/
 lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/l
 m/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
 lm/lmro10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
-Output written on Memoria.pdf (20 pages, 240523 bytes).
+Output written on Memoria.pdf (21 pages, 260358 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
+ 116 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
