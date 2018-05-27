@@ -683,7 +683,7 @@ Declaracion $\rightarrow$ \underline{BOOL} \underline{VAR}
 
 LIs $\rightarrow$ LIs \underline{NXT} Instruccion
 
-\tab $LIs_0$.a = liCompuesta($LDs_1$.a, Instruccion.id, Instruccion.exp)
+\tab $LIs_0$.a = liCompuesta($LIs_1$.a, Instruccion.id, Instruccion.exp)
 
 LIs $\rightarrow$ Instruccion
 
@@ -927,6 +927,7 @@ R0 $\rightarrow$ OP0 EXP1 R0
 R0 $\rightarrow$ $\varepsilon$
 
 \tab R0.a = R0.ah
+
 
 EXP1 $\rightarrow$ EXP2 R1
 
