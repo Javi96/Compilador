@@ -1,0 +1,104 @@
+options {
+	STATIC=false;
+}
+PARSER_BEGIN(Evaluador)
+package eval;
+
+import ast.*
+
+public class Evaluador {
+  private AsTiny as = new ASTiny();
+  private final static int MAS=0;
+  private final static int MENOS=1;
+  private final static int AND=2;
+  private final static int OR=3;
+  private final static int MAY=4;
+  private final static int MEN=5;
+  private final static int MAYI=6;
+  private final static int MENI=7;
+  private final static int IGUAL=8;
+  private final static int DIST=9;
+  private final static int POR=10;
+  private final static int DIV=11;
+  private final static int SIGNO=12;
+  private final static int NOT=13;
+
+  private E mkexpbin(int op, E opnd1, E opnd2) {
+    switch(op) {
+      case MAS: return as.suma(opnd1,opnd2); break;
+      case MENOS: return as.resta(opnd1,opnd2); break;
+      case AND: return as.conj(opnd1,opnd2); break;
+      case OR: return as.disy(opnd1,opnd2); break;
+      case MAY: return as.may(opnd1,opnd2); break;
+      case MEN: return as.men(opnd1,opnd2); break;
+      case MAYI: return as.mayi(opnd1,opnd2); break;
+      case MENI: return as.meni(opnd1,opnd2); break;
+      case IGUAL: return as.igual(opnd1,opnd2); break;
+      case DIST: return as.dist(opnd1,opnd2); break;
+      case POR: return as.mul(opnd1,opnd2); break;
+      case DIV: return as.div(opnd1,opnd2); break;
+      default: return null;
+    }
+  }
+
+  private mkexpun(op,ondn) {
+    switch(op) {
+      case SIGNO: return as.signo(opnd); break;
+      case NOT: return as.not(opnd); break;
+      default: return null;
+    }
+  } 
+}
+
+PARSER_END(Evaluador)
+  TOKEN:{<#LETRA:["a"-"z","A"-"Z"]>}
+  TOKEN:{<#DIG:["0"-"9"]>} 
+  TOKEN:{<NUM:"num">}
+  TOKEN:{<BOOL:"bool">}
+  TOKEN:{<TRUE:"true">}
+  TOKEN:{<FALSE:"false">}
+  TOKEN:{<SEC:"&&">}
+  TOKEN:{<#DEC:"."(<DIG>)"+">}
+  TOKEN:{<#EX: "e" | "E" |(<SIGNO>)?<DIG> "+">}
+  SKIP:{<["\t"," ","\r","\b","\n"]>} 
+  SKIP:{<"#"(~["\n"])*>}
+  TOKEN:{<VAR:<LETRA>(<LETRA>|<DIG>|"_")*>}
+  
+  TOKEN:{<#PDEC:"." (<DIG>)* <DIG>>}
+  TOKEN:{<#PEXP:["e","E"] <LENT>>}
+  TOKEN:{<LENT:(<SIGNO>)? (<DIG>)* <DIG>>}
+  TOKEN:{<LDEC:<LENT> <PDEC>>}
+  TOKEN:{<LEXP:(<LENT>|<LDEC>) <PEXP>>}
+
+  S Sp()   : {S ast;} {ast=S() <EOF> {return ast;}} 
+  S Programa() : {LDs ds; LIs ls;} {ds=LDs() <SEC> ls=LIs() {return as.programa(ds,ls);}} 
+  LDs LDs()   : {ResulD d; LDs aOfRLDs;} {d=Declaracion() aOfRLDs=RLDs(as.dSimple(d.tipo(),d.id())) {return aOfRLDs;}} 
+  LDs RLDs(LDs ahOfRLDs0)  : {ResulD d; LDs aOfRLDs1;} {";" d=Declaracion() aOfRLDs1=RLDs(dCompuesta(ahOfRLDs0,d.tipo(),d.id())) {return aOfRLDs1;} | {return ahOfRLDs0;}}
+  ResulD Declaracion() : {Token tipo; Token id;} {tipo=<NUM> id=<VAR> {return new ResulD(tipo.image,id.image);}| 
+                          tipo=<BOOL> id=<VAR> {return new ResulD(tipo.image,id.image);}}
+  LIs LIs()    : {ResulI i; LIs aOfRLIs;} {i=Instruccion() aOfRLIs=RLIs(as.liSimple(i.id(),i.exp())) {return aOfRLIs;}}
+  LIs RLIs(LIs ahOfRLIs0)   : {ResulI i; LIs aOfRLIs1;} {";" i=Instruccion() aOfRLIs1=RLIs(liCompuesta(ahOfRLIs0,i.id(),i.exp())) {return aOfRLIs1;} | {return ahOfRLIs0;}} 
+  ResulI Instruccion()   : {Token id; E eOfE0;} {id=<VAR> "=" eOfE0=Exp0() {return new ResulI(id.image,eOfE0);}}
+  E Exp0()  : {E aOfE1,aOfR0;} {aOfE1=Exp1() aOfR0=R0(aOfE1) {return aOfR0;}}
+  E R0(E ahOfR0)   : {int op0; E eOfE1; E eOfR0;} {op0=Op0() eOfE1=Exp1() aOfR0=R0(mkexpbin(op0,ahOfR0,aOfE1)) {return eOfR0;} | {return ahOfR0;}}
+  E Exp1()  : {E aOfE2,aOfR1;} {aOfE2=Exp2() aOfR1=R1(aOfE2) {return aOfR1;}}
+  E R1(E ahOfR1)   : {int op1; E exp;} {op1=AND exp=Exp2() aOfR1=R1(mkexpbin(op1,ahOfR1,exp)) {return eOfR0;} | 
+                      op1=OR exp=Exp2() aOfR1=R1(mkexpbin(op1,ahOfR1,exp)) {return eOfR0;}|
+                      {return ahOfR1;}} 
+  E Exp2()  : {E aOfE3,aOfR2;} {aOfE3=Exp3() aOfR2=R2(aOfE3) {return eOfR2;}}
+  E R2(E ahOfR2)  : {int op2; E eOfE3; E eOfR2;} {op2=Op2() eOfE3=Exp3() aOfR2=R2(mkexpbin(op2,ahOfR2,aOfE3)) {return eOfR2;} | {return ahOfR2;}}
+  E Exp3()  : {E aOfE4,aOfR3;} {aOfE4=Exp4() aOfR3=R3(aOfE4) {return eOfR3;}}
+  E R3(E ahOfR3)  : {int op3; E eOfE4; E eOfR3;} {op3=Op3() eOfE4=Exp4() aOfR3=R3(mkexpbin(op3,ahOfR3,aOfE4)) {return eOfR3;} | {return ahOfR3;}}
+  E Exp4()  : {int op4; E exp;} {op4=SIGNO exp=Exp4() {return mkexpun(op4,exp);} | 
+              op4=NOT exp=Exp5() {return mkexpun(op4,exp);} | exp=Exp5() {return exp;}}
+  E Exp5()  : {Token t; E aOfE0;}
+  					{t = <LENT> {return as.real(t.image);} |
+  					t = <LDEC> {return as.real(t.image);}  |
+  					t = <LEXP> {return as.real(t.image);} | 
+            t = <VAR> {return as.id(t.image);}|
+            t = <TRUE> {return as.trueCnt();} |
+            t = <FALSE> {return as.falseCnt();} |
+            t = "(" Exp0() ")" {return aOfE0;}}
+  int Op0()  : {} {"+" {return MAS;} | "-" {return MENOS;}}
+  int Op2()  : {} {">" {return MAY;} | "<" {return MEN;} | ">=" {return MAYI;} | "<=" {return MENI;} | "==" {return IGUAL;} | "!=" {return DIST;}}
+  int Op3() : {} {"*" {return POR;} | "/" {return DIV;}}
