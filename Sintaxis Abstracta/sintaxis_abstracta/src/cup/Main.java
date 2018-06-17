@@ -1,16 +1,16 @@
-package eval;
+package cup;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import alex.AnalizadorLexicoEval;
+import alex.AnalizadorLexicoJLex;
 
 public class Main {
    public static void main(String[] args) throws Exception {
      Reader input = new InputStreamReader(new FileInputStream("input.txt"));
-	 AnalizadorLexicoEval alex = new AnalizadorLexicoEval(input);
+     AnalizadorLexicoJLex alex = new AnalizadorLexicoJLex(input);
 	 Evaluador evaluador = new Evaluador(alex);
-	 System.out.println(((VSem)evaluador.parse().value).val);
+	 System.out.println(evaluador.parse().value);
  }
 }   
    

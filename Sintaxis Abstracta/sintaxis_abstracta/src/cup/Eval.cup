@@ -1,41 +1,117 @@
-package eval;
+package cup;
 
 import java_cup.runtime.*;
-import alex.AnalizadorLexicoEval;
+import alex.AnalizadorLexicoJLex;
 import alex.UnidadLexica;
-import errors.GestionErroresEval;
+import errors.GestionErroresTiny;
+import ast.E;
+import ast.S;
+import ast.LDs;
+import ast.LIs;
+import ast.ASTiny;
 
 scan with {: return getScanner().next_token(); :};
+action code {:
+   private ASTiny as = new ASTiny();
+:};
 parser code {: 
-   private GestionErroresEval errores;
+   private GestionErroresTiny errores;
    public void syntax_error(Symbol unidadLexica) {
      errores.errorSintactico((UnidadLexica)unidadLexica);
    }
 :};
 init with {: 
-   errores = new GestionErroresEval();
-   AnalizadorLexicoEval alex = (AnalizadorLexicoEval)getScanner();
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoJLex alex = (AnalizadorLexicoJLex)getScanner();
    alex.fijaGestionErrores(errores);
 :};
 
 
-terminal  MAS, POR, PAP, PCIERRE;
-terminal String NUM;
+terminal  SEC, NXT, NUM, BOOL, ASIG, AND, OR, NOT, PAP, PCIERRE, MAS, MENOS,
+ MAY, MEN, MAYI, MENI, IGUAL, DIST, POR, DIV;
+ 
+terminal String NUMR,TRUE,FALSE,VAR;
 
-non terminal  VSem Exp, Term, Fact;
+non terminal  S Sp, Programa; 
+non terminal LDs LDS;
+non terminal LIs LIS;
+non terminal Declaracion,Instruccion; 
+non terminal E EXP0, EXP1, EXP2, EXP3, EXP4, EXP5;
 
-Exp ::= Exp: exp1 MAS Term: term 
-   {: RESULT=new VSem();RESULT.val = exp1.val + term.val; :};
-Exp ::= Term: term
-   {: RESULT=new VSem();RESULT.val = term.val; :};
-Term ::= Term: term1 POR Fact: fact 
-   {: RESULT=new VSem();RESULT.val = term1.val * fact.val; :};
-Term ::= Fact: fact
-   {: RESULT=new VSem(); RESULT.val=fact.val; :};   
-Fact ::= NUM: lexDeNum      // lexDeNum representa el lexema (el analizador léxico
-                            // debe fijarlo en la unidad léxica devuelta       
-   {: RESULT = new VSem(); RESULT.val = Integer.valueOf(lexDeNum).intValue(); :};
-Fact ::= PAP Exp: exp PCIERRE
-   {: RESULT = new VSem(); RESULT.val = exp.val; :};
+Exp ::= Exp: valDeExp1 MAS Term: valDeTerm 
+   {: RESULT = valDeExp1 + valDeTerm; :};
+Exp ::= Term: valDeTerm
+   {: RESULT=valDeTerm; :};
+Term ::= Term: valDeTerm1 POR Fact: valDeFact 
+   {: RESULT= valDeTerm1 * valDeFact; :};
+Term ::= Fact: valDeFact
+   {: RESULT=valDeFact; :}; 
+Sp ::= Programa: valOfp
+   {: RESULT=valOfp; :};
+Programa ::= LDS: valOfLds SEC LIS: valOfLis
+   {: RESULT= as.programa(valOfLds,valOfLis); :};
+LDS ::= LDS: valOfLds NXT Declaracion: valOfDec
+   {: RESULT = as.dCompuesta(valOfLds,valOfDec.tipo,valOfDec.id); :};
+LDS ::= Declaracion: valOfDec
+   {: RESULT = as.dSimple(valOfDec.tipo,valOfDec.id); :};
+Declaracion ::= NUM VAR
+   {: RESULT= ; :};
+Declaracion ::= BOOL VAR
+   {: RESULT= ; :};
+LIS ::= LIS: valOfLis NXT Instruccion: valOfInst
+   {: RESULT = as.liCompuesta(valOfLis,valOfInst.id,valOfInst.exp); :};
+LIS ::= Instruccion: valOfInst
+   {: RESULT = as.liSimple(valOfInst.id,valOfInst.exp); :};
+Instruccion ::= VAR ASIG EXP0: valOfExp0
+   {: RESULT= ; :};   
+EXP0 ::= EXP0: aOfExp0 MAS EXP1: aOfExp1
+   {: RESULT = as.suma(aOfExp0,aOfExp1); :};
+EXP0 ::= EXP0: aOfExp0 MENOS EXP1: aOfExp1
+   {: RESULT = as.resta(aOfExp0,aOfExp1); :};
+EXP0 ::= EXP1: valDeExp
+   {: RESULT = valDeExp; :};
+EXP1 ::= EXP2: aOfExp2 AND EXP1: aOfExp1
+   {: RESULT = as.conj(aOfExp2,aOfExp1); :};
+EXP1 ::= EXP2: aOfExp2 OR EXP2: aOfExp2p
+   {: RESULT = as.disy(aOfExp2,aOfExp2p); :};   
+EXP1 ::= EXP2: valDeExp
+   {: RESULT = valDeExp; :}; 
+EXP2 ::= EXP3: aOfExp3 MAY EXP3: aOfExp3p
+   {: RESULT = as.may(aOfExp3,aOfExp3p); :};
+EXP2 ::= EXP3: aOfExp3 MEN EXP3: aOfExp3p
+   {: RESULT = as.men(aOfExp3,aOfExp3p); :};   
+EXP2 ::= EXP3: aOfExp3 MAYI EXP3: aOfExp3p
+   {: RESULT = as.mayi(aOfExp3,aOfExp3p); :};
+EXP2 ::= EXP3: aOfExp3 MENI EXP3: aOfExp3p
+   {: RESULT = as.meni(aOfExp3,aOfExp3p); :};   
+EXP2 ::= EXP3: aOfExp3 IGUAL EXP3: aOfExp3p
+   {: RESULT = as.igual(aOfExp3,aOfExp3p); :};
+EXP2 ::= EXP3: aOfExp3 DIST EXP3: aOfExp3p
+   {: RESULT = as.dist(aOfExp3,aOfExp3p); :};      
+EXP2 ::= EXP3: valDeExp
+   {: RESULT = valDeExp; :}; 
+EXP3 ::= EXP3: aOfExp3 POR EXP4: aOfExp4
+   {: RESULT = as.mult(aOfExp3,aOfExp4); :};
+EXP3 ::= EXP3: aOfExp3 DIV EXP4: aOfExp4
+   {: RESULT = as.div(aOfExp3,aOfExp4); :};    
+EXP3 ::= EXP4: valDeExp
+   {: RESULT = valDeExp; :}; 
+EXP4 ::= MENOS EXP4: aOfExp4
+   {: RESULT = as.signo(aOfExp4); :};
+EXP4 ::= NOT EXP4: aOfExp4
+   {: RESULT = as.not(aOfExp4); :};      
+EXP4 ::= EXP5: valDeExp
+   {: RESULT = valDeExp; :};   
+EXP5 ::= NUMR: lexDeNum        
+   {: RESULT = as.real(lexDeNum); :};
+EXP5 ::= VAR: lexDeVar        
+   {: RESULT = as.id(lexDeVar); :};
+EXP5 ::= TRUE: lexDeTrue        
+   {: RESULT = as.trueCnt(); :};
+EXP5 ::= NUMR: lexDeFalse        
+   {: RESULT = false(); :};
+EXP5 ::= PAP Exp0: valDeExp PCIERRE
+   {: RESULT = valDeExp; :};
+
 
 
