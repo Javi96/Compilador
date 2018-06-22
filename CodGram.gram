@@ -1,1 +1,2 @@
 java -cp javacc.jar javacc Eval.jj
+Java -cp cup.jar java_cup.Main -dump_states -symbols ../javaCC/EvaluadorConstants -nopositions parser.cup &> AutomataLALR_1.txt
