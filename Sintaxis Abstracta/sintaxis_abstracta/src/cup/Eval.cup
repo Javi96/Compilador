@@ -27,43 +27,32 @@ init with {:
 :};
 
 
-terminal  SEC, NXT, NUM, BOOL, ASIG, AND, OR, NOT, PAP, PCIERRE, MAS, MENOS,
+terminal  SEC, NXT, ASIG, AND, OR, NOT, PAP, PCIERRE, MAS, MENOS,
  MAY, MEN, MAYI, MENI, IGUAL, DIST, POR, DIV;
  
-terminal String NUMR,TRUE,FALSE,VAR;
+terminal String NUMR,TRUE,FALSE,VAR, NUM, BOOL;
 
 non terminal  S Sp, Programa; 
 non terminal LDs LDS;
-non terminal LIs LIS;
-non terminal Declaracion,Instruccion; 
+non terminal LIs LIS; 
 non terminal E EXP0, EXP1, EXP2, EXP3, EXP4, EXP5;
 
-Exp ::= Exp: valDeExp1 MAS Term: valDeTerm 
-   {: RESULT = valDeExp1 + valDeTerm; :};
-Exp ::= Term: valDeTerm
-   {: RESULT=valDeTerm; :};
-Term ::= Term: valDeTerm1 POR Fact: valDeFact 
-   {: RESULT= valDeTerm1 * valDeFact; :};
-Term ::= Fact: valDeFact
-   {: RESULT=valDeFact; :}; 
 Sp ::= Programa: valOfp
    {: RESULT=valOfp; :};
 Programa ::= LDS: valOfLds SEC LIS: valOfLis
    {: RESULT= as.programa(valOfLds,valOfLis); :};
-LDS ::= LDS: valOfLds NXT Declaracion: valOfDec
-   {: RESULT = as.dCompuesta(valOfLds,valOfDec.tipo,valOfDec.id); :};
-LDS ::= Declaracion: valOfDec
-   {: RESULT = as.dSimple(valOfDec.tipo,valOfDec.id); :};
-Declaracion ::= NUM VAR
-   {: RESULT= ; :};
-Declaracion ::= BOOL VAR
-   {: RESULT= ; :};
-LIS ::= LIS: valOfLis NXT Instruccion: valOfInst
-   {: RESULT = as.liCompuesta(valOfLis,valOfInst.id,valOfInst.exp); :};
-LIS ::= Instruccion: valOfInst
-   {: RESULT = as.liSimple(valOfInst.id,valOfInst.exp); :};
-Instruccion ::= VAR ASIG EXP0: valOfExp0
-   {: RESULT= ; :};   
+LDS ::= LDS: valOfLds NXT NUM: lexDeNum VAR: lexDeVar 
+   {: RESULT = as.dCompuesta(valOfLds,lexDeNum,lexDeVar); :};
+LDS ::= LDS: valOfLds NXT BOOL: lexDeBool VAR: lexDeVar 
+   {: RESULT = as.dCompuesta(valOfLds,lexDeBool,lexDeVar); :};
+LDS ::= NUM: lexDeNum VAR: lexDeVar 
+   {: RESULT = as.dSimple(lexDeNum,lexDeVar); :};
+LDS ::= BOOL: lexDeBool VAR: lexDeVar 
+   {: RESULT = as.dSimple(lexDeBool,lexDeVar); :};
+LIS ::= LIS: valOfLis NXT VAR: lexDeVar ASIG EXP0: valOfExp0
+   {: RESULT = as.liCompuesta(valOfLis,lexDeVar,valOfExp0); :};
+LIS ::= VAR: lexDeVar ASIG EXP0: valOfExp0
+   {: RESULT = as.liSimple(lexDeVar,valOfExp0); :};
 EXP0 ::= EXP0: aOfExp0 MAS EXP1: aOfExp1
    {: RESULT = as.suma(aOfExp0,aOfExp1); :};
 EXP0 ::= EXP0: aOfExp0 MENOS EXP1: aOfExp1
@@ -91,7 +80,7 @@ EXP2 ::= EXP3: aOfExp3 DIST EXP3: aOfExp3p
 EXP2 ::= EXP3: valDeExp
    {: RESULT = valDeExp; :}; 
 EXP3 ::= EXP3: aOfExp3 POR EXP4: aOfExp4
-   {: RESULT = as.mult(aOfExp3,aOfExp4); :};
+   {: RESULT = as.mul(aOfExp3,aOfExp4); :};
 EXP3 ::= EXP3: aOfExp3 DIV EXP4: aOfExp4
    {: RESULT = as.div(aOfExp3,aOfExp4); :};    
 EXP3 ::= EXP4: valDeExp
@@ -108,9 +97,9 @@ EXP5 ::= VAR: lexDeVar
    {: RESULT = as.id(lexDeVar); :};
 EXP5 ::= TRUE: lexDeTrue        
    {: RESULT = as.trueCnt(); :};
-EXP5 ::= NUMR: lexDeFalse        
-   {: RESULT = false(); :};
-EXP5 ::= PAP Exp0: valDeExp PCIERRE
+EXP5 ::= FALSE: lexDeFalse        
+   {: RESULT = as.falseCnt(); :};
+EXP5 ::= PAP EXP0: valDeExp PCIERRE
    {: RESULT = valDeExp; :};
 
 
