@@ -42,8 +42,8 @@ public class Evaluador implements EvaluadorConstants {
 
   private E mkexpun(int op, E opnd) {
     switch(op) {
-      case SIGNO: return as.signo(opnd); 
-      case NOT: return as.not(opnd); 
+      case SIGNO: return as.signo(opnd);
+      case NOT: return as.not(opnd);
       default: return null;
     }
   }
@@ -75,7 +75,7 @@ public class Evaluador implements EvaluadorConstants {
     case 22:{
       jj_consume_token(22);
       d = Declaracion();
-      aOfRLDs1 = RLDs(dCompuesta(ahOfRLDs0,d.tipo(),d.id()));
+      aOfRLDs1 = RLDs(as.dCompuesta(ahOfRLDs0,d.tipo(),d.id()));
 {if ("" != null) return aOfRLDs1;}
       break;
       }
@@ -120,7 +120,7 @@ public class Evaluador implements EvaluadorConstants {
     case 22:{
       jj_consume_token(22);
       i = Instruccion();
-      aOfRLIs1 = RLIs(liCompuesta(ahOfRLIs0,i.id(),i.exp()));
+      aOfRLIs1 = RLIs(as.liCompuesta(ahOfRLIs0,i.id(),i.exp()));
 {if ("" != null) return aOfRLIs1;}
       break;
       }
@@ -336,7 +336,7 @@ public class Evaluador implements EvaluadorConstants {
       }
     case 25:{
       t = jj_consume_token(25);
-      Exp0();
+      aOfE0 = Exp0();
       jj_consume_token(26);
 {if ("" != null) return aOfE0;}
       break;

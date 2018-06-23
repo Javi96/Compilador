@@ -2,7 +2,7 @@ options {
 	STATIC=false;
 }
 PARSER_BEGIN(Evaluador)
-package eval;
+package javaCC;
 
 import ast.*;
 
@@ -26,26 +26,26 @@ public class Evaluador {
 
   private E mkexpbin(int op, E opnd1, E opnd2) {
     switch(op) {
-      case MAS: return as.suma(opnd1,opnd2); break;
-      case MENOS: return as.resta(opnd1,opnd2); break;
-      case AND: return as.conj(opnd1,opnd2); break;
-      case OR: return as.disy(opnd1,opnd2); break;
-      case MAY: return as.may(opnd1,opnd2); break;
-      case MEN: return as.men(opnd1,opnd2); break;
-      case MAYI: return as.mayi(opnd1,opnd2); break;
-      case MENI: return as.meni(opnd1,opnd2); break;
-      case IGUAL: return as.igual(opnd1,opnd2); break;
-      case DIST: return as.dist(opnd1,opnd2); break;
-      case POR: return as.mul(opnd1,opnd2); break;
-      case DIV: return as.div(opnd1,opnd2); break;
+      case MAS: return as.suma(opnd1,opnd2);
+      case MENOS: return as.resta(opnd1,opnd2);
+      case AND: return as.conj(opnd1,opnd2);
+      case OR: return as.disy(opnd1,opnd2);
+      case MAY: return as.may(opnd1,opnd2);
+      case MEN: return as.men(opnd1,opnd2);
+      case MAYI: return as.mayi(opnd1,opnd2);
+      case MENI: return as.meni(opnd1,opnd2);
+      case IGUAL: return as.igual(opnd1,opnd2);
+      case DIST: return as.dist(opnd1,opnd2);
+      case POR: return as.mul(opnd1,opnd2);
+      case DIV: return as.div(opnd1,opnd2);
       default: return null;
     }
   }
 
   private E mkexpun(int op, E opnd) {
     switch(op) {
-      case SIGNO: return as.signo(opnd); break;
-      case NOT: return as.not(opnd); break;
+      case SIGNO: return as.signo(opnd);
+      case NOT: return as.not(opnd);
       default: return null;
     }
   } 
@@ -96,7 +96,7 @@ PARSER_END(Evaluador)
   LDs RLDs(LDs ahOfRLDs0) : {ResulD d; LDs aOfRLDs1;} 
                             {";" 
                              d=Declaracion() 
-                             aOfRLDs1=RLDs(dCompuesta(ahOfRLDs0,d.tipo(),d.id())) 
+                             aOfRLDs1=RLDs(as.dCompuesta(ahOfRLDs0,d.tipo(),d.id())) 
                              {return aOfRLDs1;} | 
                              {return ahOfRLDs0;}
                             }
@@ -117,7 +117,7 @@ PARSER_END(Evaluador)
   LIs RLIs(LIs ahOfRLIs0) : {ResulI i; LIs aOfRLIs1;} 
                             {";" 
                              i=Instruccion() 
-                             aOfRLIs1=RLIs(liCompuesta(ahOfRLIs0,i.id(),i.exp())) 
+                             aOfRLIs1=RLIs(as.liCompuesta(ahOfRLIs0,i.id(),i.exp())) 
                              {return aOfRLIs1;} | 
                              {return ahOfRLIs0;}
                              } 
@@ -208,7 +208,7 @@ PARSER_END(Evaluador)
               t = <VAR> {return as.id(t.image);} |
               t = <TRUE> {return as.trueCnt();} |
               t = <FALSE> {return as.falseCnt();} |
-              t = "(" Exp0() ")" {return aOfE0;}
+              t = "(" aOfE0=Exp0() ")" {return aOfE0;}
              }
             
   int Op0() : {} 
