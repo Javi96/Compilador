@@ -8,7 +8,7 @@ import ast.*;
 
 public class Evaluador {
 
-  private AsTiny as = new ASTiny();
+  private ASTiny as = new ASTiny();
   private final static int MAS=0;
   private final static int MENOS=1;
   private final static int AND=2;
@@ -60,6 +60,9 @@ PARSER_END(Evaluador)
   TOKEN:{<TRUE:"true">}
   TOKEN:{<FALSE:"false">}
   TOKEN:{<SEC:"&&">}
+  TOKEN:{<ANDT:"and">}
+  TOKEN:{<ORT:"or">}
+  TOKEN:{<NOTT:"not">}
   TOKEN:{<#DEC:"."(<DIG>)"+">}
   TOKEN:{<#EX: "e" | "E" |(<SIGNO>)?<DIG> "+">}
   SKIP:{<["\t"," ","\r","\b","\n"]>} 
@@ -132,11 +135,11 @@ PARSER_END(Evaluador)
               {return aOfR0;}
              }
   
-  E R0(E ahOfR0) : {int op0; E eOfE1; E eOfR0;} 
+  E R0(E ahOfR0) : {int op0; E aOfE1; E aOfR0;} 
                    {op0=Op0() 
-                    eOfE1=Exp1() 
+                    aOfE1=Exp1() 
                     aOfR0=R0(mkexpbin(op0,ahOfR0,aOfE1)) 
-                    {return eOfR0;} | 
+                    {return aOfR0;} | 
                     {return ahOfR0;}
                    }
   
@@ -146,61 +149,57 @@ PARSER_END(Evaluador)
               {return aOfR1;}
              }
   
-  E R1(E ahOfR1) : {int op1; E exp;} 
-                   {op1=AND()
-				    exp=Exp2()
-                    aOfR1=R1(mkexpbin(op1,ahOfR1,exp)) 
-                    {return eOfR0;} | 
-                    op1=OR() exp=Exp2() aOfR1=R1(mkexpbin(op1,ahOfR1,exp)) {return eOfR0;}|
+  E R1(E ahOfR1) : {int op1; E exp; E aOfR1;} 
+                   {op1=AND() exp=Exp2() aOfR1=R1(mkexpbin(op1,ahOfR1,exp)) 
+                    {return aOfR1;} | 
+                    op1=OR() exp=Exp2() aOfR1=R1(mkexpbin(op1,ahOfR1,exp)) {return aOfR1;}|
                     {return ahOfR1;}
                    } 
   int AND() : {}
-              {{return AND;}}
+              {<ANDT> {return AND;}}
   
   int OR()  : {}
-              {{return OR;}}
+              {<ORT> {return OR;}}
 
   E Exp2() : {E aOfE3,aOfR2;} 
   			 {aOfE3=Exp3() 
               aOfR2=R2(aOfE3) 
-              {return eOfR2;}
+              {return aOfR2;}
              }
   
-  E R2(E ahOfR2) : {int op2; E eOfE3; E eOfR2;} 
+  E R2(E ahOfR2) : {int op2; E aOfE3; E aOfR2;} 
                    {op2=Op2() 
-                    eOfE3=Exp3() 
+                    aOfE3=Exp3() 
                     aOfR2=R2(mkexpbin(op2,ahOfR2,aOfE3)) 
-                    {return eOfR2;} | 
+                    {return aOfR2;} | 
                     {return ahOfR2;}
                    }
   
   E Exp3() : {E aOfE4,aOfR3;} 
              {aOfE4=Exp4() 
               aOfR3=R3(aOfE4) 
-              {return eOfR3;}
+              {return aOfR3;}
              }
  
-  E R3(E ahOfR3) : {int op3; E eOfE4; E eOfR3;} 
+  E R3(E ahOfR3) : {int op3; E aOfE4; E aOfR3;} 
                    {op3=Op3() 
-                    eOfE4=Exp4() 
+                    aOfE4=Exp4() 
                     aOfR3=R3(mkexpbin(op3,ahOfR3,aOfE4)) 
-                    {return eOfR3;} | 
+                    {return aOfR3;} | 
                     {return ahOfR3;}
                    }
   
   E Exp4() : {int op4; E exp;} 
-             {op4=SIGNO()
-			  exp=Exp4()
-              {return mkexpun(op4,exp);} | 
+             {op4=SIGNO() exp=Exp4() {return mkexpun(op4,exp);} | 
               op4=NOT() exp=Exp5() {return mkexpun(op4,exp);} | 
               exp=Exp5() {return exp;}
              }
-			 
+
   int SIGNO() : {}
-                {{return SIGNO;}}
+                {"-" {return SIGNO;}}
 
   int NOT() : {}
-                {{return NOT;}}
+                {<NOTT> {return NOT;}}
   
   E Exp5() : {Token t; E aOfE0;}
   			 {t = <LENT> {return as.real(t.image);} |
