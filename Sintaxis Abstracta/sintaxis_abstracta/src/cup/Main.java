@@ -11,6 +11,7 @@ public class Main {
      AnalizadorLexicoJLex alex = new AnalizadorLexicoJLex(input);
 	 Evaluador evaluador = new Evaluador(alex);
 	 System.out.println(evaluador.parse().value);
+	 System.out.println("Análisis terminado" );
  }
 }   
    

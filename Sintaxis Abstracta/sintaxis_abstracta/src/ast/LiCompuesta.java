@@ -14,4 +14,7 @@ public class LiCompuesta extends LIs {
    public String id() {return id;}
    public E exp() {return exp;}
    public TipoLIs tipo() {return TipoLIs.LICOMPUESTA;} 
+   public String toString() {
+	   return lis.toString() + ";" + id + " = " + exp.toString();
+   }
 }

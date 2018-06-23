@@ -11,4 +11,7 @@ public class LiSimple extends LIs {
    public String id() {return id;}
    public E exp() {return exp;}
    public TipoLIs tipo() {return TipoLIs.LISIMPLE;} 
+   public String toString() {
+	   return id + " = " + exp.toString();
+   }
 }

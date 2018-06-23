@@ -7,4 +7,7 @@ public class Programa extends S {
    public LDs decs() {return decs;}
    public LIs lis() {return lis;}
    public TipoS tipo(){return TipoS.PROGRAMA;} 
+   public String toString() {
+	   return decs.toString() + " && " + lis.toString();
+   }
 }

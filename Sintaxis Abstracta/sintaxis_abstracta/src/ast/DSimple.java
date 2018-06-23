@@ -12,4 +12,7 @@ public class DSimple extends LDs {
    public String type() {return tipo;}
    public String id() {return id;}
    public TipoLDs tipoD() {return TipoLDs.DSIMPLE;} 
+   public String toString() {
+	   return tipo + " " + id;
+   }
 }

@@ -14,4 +14,7 @@ public class DCompuesta extends LDs {
    public String type() {return tipo;}
    public String id() {return id;}
    public TipoLDs tipoD() {return TipoLDs.DCOMPUESTA;} 
+   public String toString() {
+	   return decs.toString() + ";" + tipo + " " + id;
+   }
 }
