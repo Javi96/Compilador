@@ -1,0 +1,848 @@
+===== Viable Prefix Recognizer =====
+START lalr_state [0]: {
+  [LDS ::= (*) NUM VAR , {SEC NXT }]
+  [Programa ::= (*) LDS SEC LIS , {EOF }]
+  [LDS ::= (*) LDS NXT BOOL VAR , {SEC NXT }]
+  [$START ::= (*) Sp EOF , {EOF }]
+  [LDS ::= (*) BOOL VAR , {SEC NXT }]
+  [LDS ::= (*) LDS NXT NUM VAR , {SEC NXT }]
+  [Sp ::= (*) Programa , {EOF }]
+}
+transition on Sp to state [5]
+transition on BOOL to state [4]
+transition on Programa to state [3]
+transition on LDS to state [2]
+transition on NUM to state [1]
+
+-------------------
+lalr_state [1]: {
+  [LDS ::= NUM (*) VAR , {SEC NXT }]
+}
+transition on VAR to state [62]
+
+-------------------
+lalr_state [2]: {
+  [Programa ::= LDS (*) SEC LIS , {EOF }]
+  [LDS ::= LDS (*) NXT BOOL VAR , {SEC NXT }]
+  [LDS ::= LDS (*) NXT NUM VAR , {SEC NXT }]
+}
+transition on NXT to state [9]
+transition on SEC to state [8]
+
+-------------------
+lalr_state [3]: {
+  [Sp ::= Programa (*) , {EOF }]
+}
+
+-------------------
+lalr_state [4]: {
+  [LDS ::= BOOL (*) VAR , {SEC NXT }]
+}
+transition on VAR to state [7]
+
+-------------------
+lalr_state [5]: {
+  [$START ::= Sp (*) EOF , {EOF }]
+}
+transition on EOF to state [6]
+
+-------------------
+lalr_state [6]: {
+  [$START ::= Sp EOF (*) , {EOF }]
+}
+
+-------------------
+lalr_state [7]: {
+  [LDS ::= BOOL VAR (*) , {SEC NXT }]
+}
+
+-------------------
+lalr_state [8]: {
+  [LIS ::= (*) VAR ASIG EXP0 , {EOF NXT }]
+  [Programa ::= LDS SEC (*) LIS , {EOF }]
+  [LIS ::= (*) LIS NXT VAR ASIG EXP0 , {EOF NXT }]
+}
+transition on VAR to state [15]
+transition on LIS to state [14]
+
+-------------------
+lalr_state [9]: {
+  [LDS ::= LDS NXT (*) BOOL VAR , {SEC NXT }]
+  [LDS ::= LDS NXT (*) NUM VAR , {SEC NXT }]
+}
+transition on BOOL to state [11]
+transition on NUM to state [10]
+
+-------------------
+lalr_state [10]: {
+  [LDS ::= LDS NXT NUM (*) VAR , {SEC NXT }]
+}
+transition on VAR to state [13]
+
+-------------------
+lalr_state [11]: {
+  [LDS ::= LDS NXT BOOL (*) VAR , {SEC NXT }]
+}
+transition on VAR to state [12]
+
+-------------------
+lalr_state [12]: {
+  [LDS ::= LDS NXT BOOL VAR (*) , {SEC NXT }]
+}
+
+-------------------
+lalr_state [13]: {
+  [LDS ::= LDS NXT NUM VAR (*) , {SEC NXT }]
+}
+
+-------------------
+lalr_state [14]: {
+  [LIS ::= LIS (*) NXT VAR ASIG EXP0 , {EOF NXT }]
+  [Programa ::= LDS SEC LIS (*) , {EOF }]
+}
+transition on NXT to state [58]
+
+-------------------
+lalr_state [15]: {
+  [LIS ::= VAR (*) ASIG EXP0 , {EOF NXT }]
+}
+transition on ASIG to state [16]
+
+-------------------
+lalr_state [16]: {
+  [EXP0 ::= (*) EXP0 MENOS EXP1 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [LIS ::= VAR ASIG (*) EXP0 , {EOF NXT }]
+  [EXP1 ::= (*) EXP2 OR EXP2 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= (*) EXP1 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= (*) EXP0 MAS EXP1 , {EOF NXT MAS MENOS }]
+  [EXP1 ::= (*) EXP2 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 AND EXP1 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on EXP0 to state [22]
+transition on EXP1 to state [21]
+transition on MENOS to state [20]
+transition on EXP2 to state [19]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [17]: {
+  [EXP3 ::= EXP4 (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [18]: {
+  [EXP2 ::= EXP3 (*) MAYI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= EXP3 (*) IGUAL EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= EXP3 (*) MEN EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= EXP3 (*) MENI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= EXP3 (*) MAY EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= EXP3 (*) DIST EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+}
+transition on MAYI to state [49]
+transition on POR to state [48]
+transition on MAY to state [47]
+transition on DIV to state [46]
+transition on IGUAL to state [45]
+transition on MEN to state [44]
+transition on MENI to state [43]
+transition on DIST to state [42]
+
+-------------------
+lalr_state [19]: {
+  [EXP1 ::= EXP2 (*) OR EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP1 ::= EXP2 (*) AND EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP1 ::= EXP2 (*) , {EOF NXT PCIERRE MAS MENOS }]
+}
+transition on OR to state [39]
+transition on AND to state [38]
+
+-------------------
+lalr_state [20]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= MENOS (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP4 to state [37]
+
+-------------------
+lalr_state [21]: {
+  [EXP0 ::= EXP1 (*) , {EOF NXT PCIERRE MAS MENOS }]
+}
+
+-------------------
+lalr_state [22]: {
+  [EXP0 ::= EXP0 (*) MENOS EXP1 , {EOF NXT MAS MENOS }]
+  [EXP0 ::= EXP0 (*) MAS EXP1 , {EOF NXT MAS MENOS }]
+  [LIS ::= VAR ASIG EXP0 (*) , {EOF NXT }]
+}
+transition on MENOS to state [34]
+transition on MAS to state [32]
+
+-------------------
+lalr_state [23]: {
+  [EXP0 ::= (*) EXP0 MENOS EXP1 , {PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 OR EXP2 , {PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= (*) EXP1 , {PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= (*) EXP0 MAS EXP1 , {PCIERRE MAS MENOS }]
+  [EXP1 ::= (*) EXP2 , {PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 AND EXP1 , {PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= PAP (*) EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on EXP0 to state [31]
+transition on EXP1 to state [21]
+transition on MENOS to state [20]
+transition on EXP2 to state [19]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [24]: {
+  [EXP5 ::= TRUE (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [25]: {
+  [EXP5 ::= VAR (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [26]: {
+  [EXP5 ::= FALSE (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [27]: {
+  [EXP5 ::= NUMR (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [28]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= NOT (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP4 to state [30]
+
+-------------------
+lalr_state [29]: {
+  [EXP4 ::= EXP5 (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [30]: {
+  [EXP4 ::= NOT EXP4 (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [31]: {
+  [EXP5 ::= PAP EXP0 (*) PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= EXP0 (*) MENOS EXP1 , {PCIERRE MAS MENOS }]
+  [EXP0 ::= EXP0 (*) MAS EXP1 , {PCIERRE MAS MENOS }]
+}
+transition on MENOS to state [34]
+transition on PCIERRE to state [33]
+transition on MAS to state [32]
+
+-------------------
+lalr_state [32]: {
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 OR EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= EXP0 MAS (*) EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP1 ::= (*) EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 AND EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on EXP1 to state [36]
+transition on MENOS to state [20]
+transition on EXP2 to state [19]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [33]: {
+  [EXP5 ::= PAP EXP0 PCIERRE (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [34]: {
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 OR EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 AND EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= EXP0 MENOS (*) EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP1 to state [35]
+transition on EXP2 to state [19]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [35]: {
+  [EXP0 ::= EXP0 MENOS EXP1 (*) , {EOF NXT PCIERRE MAS MENOS }]
+}
+
+-------------------
+lalr_state [36]: {
+  [EXP0 ::= EXP0 MAS EXP1 (*) , {EOF NXT PCIERRE MAS MENOS }]
+}
+
+-------------------
+lalr_state [37]: {
+  [EXP4 ::= MENOS EXP4 (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [38]: {
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 OR EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= EXP2 AND (*) EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP1 ::= (*) EXP2 AND EXP1 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP1 to state [41]
+transition on EXP2 to state [19]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [39]: {
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= EXP2 OR (*) EXP2 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {EOF NXT PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP2 to state [40]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [40]: {
+  [EXP1 ::= EXP2 OR EXP2 (*) , {EOF NXT PCIERRE MAS MENOS }]
+}
+
+-------------------
+lalr_state [41]: {
+  [EXP1 ::= EXP2 AND EXP1 (*) , {EOF NXT PCIERRE MAS MENOS }]
+}
+
+-------------------
+lalr_state [42]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 DIST (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP3 to state [57]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [43]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 MENI (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP3 to state [56]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [44]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 MEN (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP3 to state [55]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [45]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 IGUAL (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP3 to state [54]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [46]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP3 ::= EXP3 DIV (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP4 to state [53]
+
+-------------------
+lalr_state [47]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 MAY (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP3 to state [52]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [48]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP3 ::= EXP3 POR (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP4 to state [51]
+
+-------------------
+lalr_state [49]: {
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 MAYI (*) EXP3 , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on MENOS to state [20]
+transition on EXP3 to state [50]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [50]: {
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 MAYI EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on POR to state [48]
+transition on DIV to state [46]
+
+-------------------
+lalr_state [51]: {
+  [EXP3 ::= EXP3 POR EXP4 (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [52]: {
+  [EXP2 ::= EXP3 MAY EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on POR to state [48]
+transition on DIV to state [46]
+
+-------------------
+lalr_state [53]: {
+  [EXP3 ::= EXP3 DIV EXP4 (*) , {EOF NXT AND OR PCIERRE MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+
+-------------------
+lalr_state [54]: {
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 IGUAL EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on POR to state [48]
+transition on DIV to state [46]
+
+-------------------
+lalr_state [55]: {
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP2 ::= EXP3 MEN EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+}
+transition on POR to state [48]
+transition on DIV to state [46]
+
+-------------------
+lalr_state [56]: {
+  [EXP2 ::= EXP3 MENI EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on POR to state [48]
+transition on DIV to state [46]
+
+-------------------
+lalr_state [57]: {
+  [EXP2 ::= EXP3 DIST EXP3 (*) , {EOF NXT AND OR PCIERRE MAS MENOS }]
+  [EXP3 ::= EXP3 (*) DIV EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+  [EXP3 ::= EXP3 (*) POR EXP4 , {EOF NXT AND OR PCIERRE MAS MENOS POR DIV }]
+}
+transition on POR to state [48]
+transition on DIV to state [46]
+
+-------------------
+lalr_state [58]: {
+  [LIS ::= LIS NXT (*) VAR ASIG EXP0 , {EOF NXT }]
+}
+transition on VAR to state [59]
+
+-------------------
+lalr_state [59]: {
+  [LIS ::= LIS NXT VAR (*) ASIG EXP0 , {EOF NXT }]
+}
+transition on ASIG to state [60]
+
+-------------------
+lalr_state [60]: {
+  [EXP0 ::= (*) EXP0 MENOS EXP1 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAY EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP2 ::= (*) EXP3 DIST EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP4 ::= (*) MENOS EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) TRUE , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP1 ::= (*) EXP2 OR EXP2 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MENI EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP3 ::= (*) EXP3 DIV EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) NUMR , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= (*) EXP1 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MEN EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP2 ::= (*) EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP4 ::= (*) NOT EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) FALSE , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP0 ::= (*) EXP0 MAS EXP1 , {EOF NXT MAS MENOS }]
+  [EXP1 ::= (*) EXP2 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 IGUAL EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP3 ::= (*) EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) VAR , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [LIS ::= LIS NXT VAR ASIG (*) EXP0 , {EOF NXT }]
+  [EXP1 ::= (*) EXP2 AND EXP1 , {EOF NXT MAS MENOS }]
+  [EXP2 ::= (*) EXP3 MAYI EXP3 , {EOF NXT AND OR MAS MENOS }]
+  [EXP3 ::= (*) EXP3 POR EXP4 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP4 ::= (*) EXP5 , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+  [EXP5 ::= (*) PAP EXP0 PCIERRE , {EOF NXT AND OR MAS MENOS MAY MEN MAYI MENI IGUAL DIST POR DIV }]
+}
+transition on EXP5 to state [29]
+transition on NOT to state [28]
+transition on NUMR to state [27]
+transition on FALSE to state [26]
+transition on VAR to state [25]
+transition on TRUE to state [24]
+transition on PAP to state [23]
+transition on EXP0 to state [61]
+transition on EXP1 to state [21]
+transition on MENOS to state [20]
+transition on EXP2 to state [19]
+transition on EXP3 to state [18]
+transition on EXP4 to state [17]
+
+-------------------
+lalr_state [61]: {
+  [EXP0 ::= EXP0 (*) MENOS EXP1 , {EOF NXT MAS MENOS }]
+  [EXP0 ::= EXP0 (*) MAS EXP1 , {EOF NXT MAS MENOS }]
+  [LIS ::= LIS NXT VAR ASIG EXP0 (*) , {EOF NXT }]
+}
+transition on MENOS to state [34]
+transition on MAS to state [32]
+
+-------------------
+lalr_state [62]: {
+  [LDS ::= NUM VAR (*) , {SEC NXT }]
+}
+
+-------------------
+------- CUP v0.11b beta 20140220 Parser Generation Summary -------
+  0 errors and 0 warnings
+  26 terminals, 10 non-terminals, and 33 productions declared, 
+  producing 63 unique parse states.
+  0 terminals declared but not used.
+  0 non-terminals declared but not used.
+  0 productions never reduced.
+  0 conflicts detected (0 expected).
+  Code written to "parser.java", and "../javaCC/EvaluadorConstants.java".
+---------------------------------------------------- (v0.11b beta 20140220)
